@@ -1,0 +1,7 @@
+{{#each photo}}
+<a href="http://www.flickr.com/photos/{{this.owner}}/{{this.id}}" target="_blank">
+<img src="http://farm{{this.farm}}.staticflickr.com/{{this.server}}/{{this.id}}_{{this.secret}}_t.jpg" alt="{{pthis.title}}" />
+</a>
+{{/each}}
+
+<p><a href="http://www.flickr.com/groups/pleiades-places/pool/tags/pleiades%3Adepicts%3D{{pleiadesID}}/" target="_blank">View all {{photos.length}} photos on flickr</a></p>

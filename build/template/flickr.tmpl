@@ -1,0 +1,65 @@
+(function() {
+  var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+templates['flickr'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  var buffer = "", stack1, stack2, foundHelper, tmp1, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\r\n<a href=\"http://www.flickr.com/photos/";
+  stack1 = depth0.owner;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.owner", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "/";
+  stack1 = depth0.id;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.id", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "\" target=\"_blank\">\r\n<img src=\"http://farm";
+  stack1 = depth0.farm;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.farm", { hash: {} }); }
+  buffer += escapeExpression(stack1) + ".staticflickr.com/";
+  stack1 = depth0.server;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.server", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "/";
+  stack1 = depth0.id;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.id", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "_";
+  stack1 = depth0.secret;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.secret", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "_t.jpg\" alt=\"";
+  foundHelper = helpers.pthis;
+  stack1 = foundHelper || depth0.pthis;
+  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.title);
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "pthis.title", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "\" />\r\n</a>\r\n";
+  return buffer;}
+
+  foundHelper = helpers.photo;
+  stack1 = foundHelper || depth0.photo;
+  stack2 = helpers.each;
+  tmp1 = self.program(1, program1, data);
+  tmp1.hash = {};
+  tmp1.fn = tmp1;
+  tmp1.inverse = self.noop;
+  stack1 = stack2.call(depth0, stack1, tmp1);
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n\r\n<p><a href=\"http://www.flickr.com/groups/pleiades-places/pool/tags/pleiades%3Adepicts%3D";
+  foundHelper = helpers.pleiadesID;
+  stack1 = foundHelper || depth0.pleiadesID;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "pleiadesID", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "/\" target=\"_blank\">View all ";
+  foundHelper = helpers.photos;
+  stack1 = foundHelper || depth0.photos;
+  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.length);
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "photos.length", { hash: {} }); }
+  buffer += escapeExpression(stack1) + " photos on flickr</a></p>\r\n";
+  return buffer;});
+})();
