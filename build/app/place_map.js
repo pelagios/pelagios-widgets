@@ -1,1 +1,6 @@
-define(["lib/async!http://maps.google.com/maps/api/js?sensor=false"],function(){function a(a){if(!document.getElementById(a))throw Error("ERROR: Invalid ID for place map");var b=new google.maps.Map(document.getElementById(a),{zoom:8,mapTypeId:google.maps.MapTypeId.TERRAIN}),c=new google.maps.Marker({map:b});this.refresh=function(){google.maps.event.trigger(b,"resize"),b.setCenter(c.getPosition())},this.setMarker=function(a,d){var e=new google.maps.LatLng(a[1],a[0]);c.setPosition(e),c.setTitle(d),b.setCenter(e),google.maps.event.trigger(b,"resize")}}return{PlaceMap:a}})
+/**
+ * Pelagios place map library
+ * @license GPL v3(see LICENSE.txt)
+ */
+
+define(["lib/async!http://maps.google.com/maps/api/js?sensor=false"],function(){function PlaceMap(id){if(!document.getElementById(id))throw Error("ERROR: Invalid ID for place map");var map=new google.maps.Map(document.getElementById(id),{zoom:8,mapTypeId:google.maps.MapTypeId.TERRAIN}),marker=new google.maps.Marker({map:map});this.refresh=function(){google.maps.event.trigger(map,"resize"),map.setCenter(marker.getPosition())},this.setMarker=function(coordinates,title){var location=new google.maps.LatLng(coordinates[1],coordinates[0]);marker.setPosition(location),marker.setTitle(title),map.setCenter(location),google.maps.event.trigger(map,"resize")}}return{PlaceMap:PlaceMap}})

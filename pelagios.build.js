@@ -2,8 +2,15 @@
     appDir: "src",
     baseUrl: ".",
     dir: "build",
+    
+    optimizeCss: "standard",
+
+    // inlining ftw
+    inlineText: true,   
+    optimizeAllPluginResources: true,
+    
     paths: {
-        jquery: "empty:"
+        "jquery": "empty:",
     },
     modules: [
         {

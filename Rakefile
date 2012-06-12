@@ -1,6 +1,6 @@
 require 'rake'
 
-HANDLEBARS_FILES = FileList['build/template/*.handlebars']
+HANDLEBARS_FILES = FileList['src/template/*.handlebars']
 
 desc 'Compile handlebars templates'
 task :handlebars do
@@ -16,4 +16,4 @@ task :requirejs do
     sh "node r.js -o pelagios.build.js"
 end
 
-task :default => [:requirejs, :handlebars]
+task :default => [:handlebars, :requirejs]

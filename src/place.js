@@ -13,17 +13,17 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
     // Get the baseURL by assuming this script is the last to have been run
     var scripts = document.getElementsByTagName('script');
     var src = scripts[scripts.length - 1].src;
-    var baseURL = src.replace(/build\/place.js/g, '');
+    var baseURL = src.replace(/place.js/g, '');
 
     require.config({
-                    paths: {
-                        jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min',
-                    },
-                    priority: ['jquery'],
-                    jQuery: "1.7.1",
-                    waitSeconds : 5,
-                    baseUrl: baseURL+'build/scripts'            
-    });
+        paths: {
+            jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min',
+        },
+        priority: ['jquery'],
+        jQuery: "1.7.1",
+        waitSeconds : 5,
+        baseUrl: baseURL,            
+    })
 
     require(    
         ['app/pelagios',
@@ -53,11 +53,11 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                                      debug:              true,
                                      overlay:            true,
                                      templateDir:        baseURL+
-                                                         'build/template/',
+                                                         'template/',
                                      imageDir:           baseURL+'images/',
                                      iconDir:            baseURL+'images/partner_icons/',
-                                     scriptDir:          baseURL+'build/scripts/',
-                                     cssDir:             baseURL+'build/css/'
+                                     scriptDir:          baseURL+'scripts/',
+                                     cssDir:             baseURL+'css/'
                                     };
 
                     if (util.includesGoogleMaps2()) {

@@ -5,12 +5,15 @@
   <link rel="stylesheet" type="text/css" href="../styles.css" media="screen" />
   <meta name="robots" content="noindex, nofollow">
   <title>Pelagios Widget Demo: Corinth (570182)</title>
+ <script type="text/javascript" src="http://pelagios.github.com/pelagios-widgets/build/lib/require.js">
+</script>
+ <script src="http://pelagios.github.com/pelagios-widgets/build/place.js">
+</script>
   </head>
   <body >
     <h2>Pelagios Widget Demo: Corinth (570182)</h2>
         <p>HTML 5</p>
         <p>Click the icon to display the widget</p>
-         <?php include('pelagios_include.php'); ?>
         <div id="123-pelagios" data-pleiades_id='570182' class="pelagios pelagios-place"></div>
     <p>Text afterwards for demo purposes: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ut felis non massa mattis imperdiet. Donec sit amet turpis non elit cursus aliquet quis ac nunc. Phasellus vitae nisl dui. Sed sit amet quam ac tellus tincidunt convallis. Maecenas nunc justo, rutrum nec accumsan mattis, dignissim nec neque. Etiam pulvinar nulla eget magna porttitor interdum. Mauris aliquam, urna sed pretium faucibus, ipsum tortor commodo quam, sed pharetra turpis nulla fermentum nunc. Integer sit amet diam felis, et imperdiet nunc. Donec velit tellus, gravida vel euismod at, suscipit at nulla.
 

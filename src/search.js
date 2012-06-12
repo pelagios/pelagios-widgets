@@ -12,7 +12,7 @@ if (!PELAGIOS_SEARCH_MAIN_JS_RUN) { // Only run this script once per page
     // Get the baseURL by assuming this script is the last to have been run
     var scripts = document.getElementsByTagName('script');
     var src = scripts[scripts.length - 1].src;
-    var baseURL = src.replace(/build\/search.js/g, '');
+    var baseURL = src.replace(/search.js/g, '');
 
     require.config({
                     paths: {
@@ -21,7 +21,7 @@ if (!PELAGIOS_SEARCH_MAIN_JS_RUN) { // Only run this script once per page
                     priority: ['jquery'],
                     jQuery: "1.7.1",
                     waitSeconds : 5,
-                    baseUrl: baseURL+'scripts'            
+                    baseUrl: baseURL            
     });
 
     require(    
@@ -44,11 +44,11 @@ if (!PELAGIOS_SEARCH_MAIN_JS_RUN) { // Only run this script once per page
                                      debug:              true,
                                      overlay:            false,
                                      templateDir:        baseURL+
-                                                         'build/template/',
+                                                         'template/',
                                      imageDir:           baseURL+'images/',
                                      iconDir:            baseURL+'images/partner_icons/',
-                                     scriptDir:          baseURL+'build/scripts/',
-                                     cssDir:             baseURL+'build/css/'                                     
+                                     scriptDir:          baseURL+'scripts/',
+                                     cssDir:             baseURL+'css/'                                     
                                     };
                     if (util.includesGoogleMaps2()) {
                         widgetContext.displayMap = false;

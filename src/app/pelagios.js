@@ -2,8 +2,40 @@
  * Pelagios common library
  * @license GPL v3(see LICENSE.txt)
  */
- define(['jquery', 'app/dataset', 'app/util', 'app/search_map', 'app/place_map'], 
-        function ($, dataset, util, search_map, place_map) {   
+ define(['jquery', 
+         'app/dataset', 
+         'app/util', 
+         'app/search_map', 
+         'app/place_map', 
+         'lib/text!template/widget_container.tmpl',
+         'lib/text!template/place.tmpl',
+         'lib/text!template/section.tmpl',
+         'lib/text!template/flickr.tmpl',
+         'lib/text!template/pleiades.tmpl',
+         'lib/text!template/pelagios_partner.tmpl',
+         'lib/text!template/error.tmpl',
+         'lib/text!template/search.tmpl',
+         'lib/text!template/annotations.tmpl',
+         'lib/text!template/search_results.tmpl',
+         
+         
+         ], 
+        function ($, 
+                  dataset, 
+                  util, 
+                  search_map, 
+                  place_map, 
+                  widget_container_tmpl, 
+                  place_tmpl,
+                  section_tmpl,
+                  flickr_tmpl,
+                  pleiades_tmpl,
+                  pelagios_partner_tmpl,
+                  error_tmpl,
+                  search_tmpl,
+                  annotations_tmpl,
+                  search_results_tmpl
+                  ) {   
     var config = {
         URL_PELAGIOS_SEARCH_V1:      'http://pelagios.dme.ait.ac.at/graph-explorer/places/search',
         URL_PELAGIOS_SEARCH_V2:      'http://pelagios.dme.ait.ac.at/api/search.json',
@@ -28,6 +60,21 @@
         var searchMap = {};
         var searchString = "";
         
+        // Although not a good idea to use eval, however hard to get round
+        // the security risks as the template files contain javascript 
+        // and are on a different server from the html so nothing to stop some
+        // sort of theoretical man in the middle attack
+        eval(widget_container_tmpl);
+        eval(place_tmpl);
+        eval(section_tmpl);
+        eval(flickr_tmpl);
+        eval(pleiades_tmpl);
+        eval(pelagios_partner_tmpl);
+        eval(error_tmpl);
+        eval(search_tmpl);
+        eval(annotations_tmpl);
+        eval(search_results_tmpl);
+        
         if (typeof($('#'+widgetContext.widgetID)) == undefined) {
             debug('ERROR: $(#'+widgetContext.widgetID+') is undefined');
         }
@@ -37,14 +84,17 @@
                          widgetContext.cssDir+
                          'pelagios.css" media="screen" />');
         // Add the basic widget structure to hang things off 
-        addTemplate(widgetContext.widgetID, 'widget_container', 
-                   {widgetContext: widgetContext});
+        
+        var html = Handlebars.templates['widget_container']({widgetContext: widgetContext});
+        $('#'+widgetContext.widgetID).append(html);
+          
                  
         this.setTypePlace = function() { 
             debug('SETTING WIDGET TYPE: PLACE');
+            var html = Handlebars.templates['place']({widgetContext: widgetContext});
             
-            addTemplate(widgetContext.widgetID+'-content', 'place', {widgetContext: widgetContext});  
-            hidePlace();
+            $('#'+widgetContext.widgetID+'-content').append(html);
+                hidePlace();
         
             if (widgetContext.overlay == true) {
                 // Position the widget
@@ -84,8 +134,11 @@
 
             // Add the template for the search form, search results, and template for displaying a place
             // then hide everything apart from the search form
-            addTemplate(widgetContext.widgetID+'-content', 'search', {widgetContext: widgetContext});
-            addTemplate(widgetContext.widgetID+'-content', 'place', {widgetContext: widgetContext});
+            var html = Handlebars.templates['search']({widgetContext: widgetContext});
+            $('#'+widgetContext.widgetID+'-content').append(html);
+            var html = Handlebars.templates['place']({widgetContext: widgetContext});
+            $('#'+widgetContext.widgetID+'-content').append(html);
+            
             hidePlace();
             hideSearchResults();
             
@@ -142,9 +195,9 @@
                                                      config.MAX_PHOTOS_FLICKR - 1), 
                                   //Flickr only lets us display 30 images at a time
                                 pleiadesID: pleiadesID}
-                                
-                    addTemplate(widgetContext.widgetID+'-content-flickr', 'flickr', data)
 
+                    var html = Handlebars.templates['flickr'](data);
+                    $('#'+widgetContext.widgetID+'-content-flickr').append(html);
                 }
             }     
         }
@@ -168,7 +221,8 @@
                                 msg: config.MSG_PLEIADES_TIMEOUT};                
                 }
                 
-                addTemplate(widgetContext.widgetID+'-content', 'error', data);
+                var html = Handlebars.templates['error'](data);
+                $('#'+widgetContext.widgetID+'-content').append(html);
             }
 
            /**
@@ -187,7 +241,9 @@
                                 pleiadesID: data.id,
                                 widgetContext: widgetContext};
 
-                addTemplate(widgetContext.widgetID+'-pleiades', 'pleiades', placeData);
+
+                var html = Handlebars.templates['pleiades'](placeData);
+                $('#'+widgetContext.widgetID+'-pleiades').append(html);
 
             // Add the Google map - we need to do this here so that we can refresh#
             // it when the widget is opened
@@ -257,7 +313,8 @@
                     var data = {subdataset: subdataset, 
                                 rootDatasetID: rootDatasetID,
                                 widgetContext: widgetContext};
-                    addTemplate(widgetContext.widgetID+'-content-'+rootDatasetID, 'pelagios_partner', data);
+                    var html = Handlebars.templates['pelagios_partner'](data);
+                    $('#'+widgetContext.widgetID+'-content-'+rootDatasetID).append(html);
                     $('#'+widgetContext.widgetID+'-subdatasets-'+rootDatasetID).
                       css('list-style-image', 
                       'url('+widgetContext.imageDir+'icons/bullet.png)');
@@ -343,7 +400,9 @@
                 var data = {subdatasetID: subdatasetID, 
                             annotation: annotation,
                             widgetContext: widgetContext};
-                addTemplate(widgetContext.widgetID+'-annotations_pane-'+subdatasetID, 'annotations', data);
+                var html = Handlebars.templates['annotations'](data);
+            
+            $('#'+widgetContext.widgetID+'-annotations_pane-'+subdatasetID).append(html);
             }
             
            /**
@@ -390,7 +449,8 @@
             
             var data = {place: places, widgetContext: widgetContext, searchString: searchString}
             // Display the search results
-            addTemplate(widgetContext.widgetID+'-search-results', 'search_results', data);
+            var html = Handlebars.templates['search_results'](data);
+            $('#'+widgetContext.widgetID+'-search-results').append(html);
             if (widgetContext.displayMap) {            
                 searchMap = new search_map.SearchMap(widgetContext.widgetID +
                                 "-search-map_canvas");  
@@ -464,7 +524,9 @@
                          iconURL: iconURL, 
                          strapline:strapline,
                          widgetContext: widgetContext};
-             addTemplate(widgetContext.widgetID+'-sections', 'section', data);
+
+            var html = Handlebars.templates['section'](data);
+            $('#'+widgetContext.widgetID+'-sections').append(html);
              // Start with the contents hidden
              $('#'+widgetContext.widgetID+'-content-'+name).hide();             
              // Handler to toggle section open and closed
@@ -492,23 +554,6 @@
                                                              'underline';
              element.css('text-decoration', new_style);
          }
-
-        function addTemplate(id, template, data) {
-            if (typeof($('#'+id)) == undefined) {
-                debug('ERROR: $(#'+id+') not defined');
-            }
-            $('#'+id).append('<script src="'+widgetContext.templateDir+
-                                                 template+'.tmpl">'); 
-            try {                                        
-                var html = Handlebars.templates[template](data);
-            } catch (error) {
-                debug('Handlebars.templates[template](data) failed');
-                console.log(Handlebars);
-                console.log(template);
-                console.log(data);
-            }
-            $('#'+id).append(html);
-        }
         
         function debug(msg) {
             if (widgetContext.debug) {
