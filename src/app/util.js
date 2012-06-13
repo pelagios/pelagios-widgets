@@ -61,7 +61,7 @@
                 // Internet Explorer only supports CORS via XDomainRequest
                 var xdr = new XDomainRequest();
                 xdr.timeout = timeout;
-                xdr.open("get", pleiadesAPIURL);
+                xdr.open("get", url);
                 xdr.onload = function(){
                                 success($.parseJSON(xdr.responseText), '', 
                                         xdr);
