@@ -356,9 +356,8 @@
                 
                 // Get the subdataset results from the Pelagios Graph Explorer API
                 var url = config.URL_PELAGIOS_API_V2+'datasets/'+
-                          subdatasetID+'/annotations.json?filter_places='+encodeURIComponent(config.URL_PLEIADES+pleiadesID);
-                              +"&callback=?";                            
-                $.getJSON(url, function(json) {
+                          subdatasetID+'/annotations.json?filter_places='+encodeURIComponent(config.URL_PLEIADES+pleiadesID)+"&callback=?";                               
+                util.getAPIData(url, function(json) {
                                     displaySubdataset(subdatasetID, json);
                 });
             }
@@ -368,9 +367,6 @@
             * Display the data from a subdataset using the json data obtained
             */        
             function displaySubdataset(subdatasetID, json) {
-                //rootDatasetID =  json.dataset.replace(/http:\/\/pelagios.dme.ait.ac.at\/api\/datasets\//g, '');
-
-                //rootDatasetInfo = getDatasetInfo(rootDatasetID);
                 // Hide the 'loading' message and display the annotations pane
                 // where we will put the annotations
                 $('#'+widgetContext.widgetID+'-loading-' + subdatasetID).hide();            
