@@ -45,8 +45,13 @@
     } 
      
     .pelagios .logo {
-        float:left !important;
+        float:   left !important;
         padding: 20px 0 0 20px !important;
+
+    }
+    
+    .pelagios .icon {
+        cursor:  pointer !important;
     }
       
     .pelagios  .content-wrapper {
@@ -106,10 +111,11 @@
     }
 
     .pelagios  .section-header {
-        color: white !important;
+        color:      white !important;
         background: #1C3664 !important;
-        padding: 5px 5px 5px 15px !important;
+        padding:    5px 5px 5px 15px !important;
         min-height: 30px !important;
+        cursor:     pointer !important;
     }
       
     .pelagios  .section-header img {
