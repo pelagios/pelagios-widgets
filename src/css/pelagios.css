@@ -177,12 +177,17 @@
     }
 
     .pelagios   .section-content ul.annotations {
-        list-style-type: disc !important;
-        font-size: 0.7em !important; 
+        list-style-type: none !important;
         list-style-image: none !important;
         padding: 2px 0 2px 2px !important;
-        margin: 0 0 0 10px !important;
+        margin: 0 0 0 5px !important;
     }
+    
+    .pelagios   .section-content ul.annotations a {
+        font-size: 0.7em !important; 
+    }
+    
+    
     
     /** CSS for Search **/
     
