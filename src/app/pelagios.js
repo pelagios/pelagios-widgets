@@ -316,7 +316,7 @@
                         // Add the handler to open and close the subdataset 
                         // content and start with the content hidden
                         for (var i = 0; i < subdataset.length; i++) {   
-                            $('#'+widgetContext.widgetID+'-toggle-subdataset-'+
+                            $('#'+widgetContext.widgetID+'-subdataset-'+
                               subdataset[i].id).click(
                                                      {id: subdataset[i].id},
                                                      clickDisplaySubdataset);                            

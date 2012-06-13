@@ -182,6 +182,10 @@
         /* list-style-image is added in pelagios.js as depends on base URL */  
     }
 
+    .pelagios   .section-content ul.subdatasets li {
+        cursor:  pointer !important;
+    }
+    
     .pelagios   .section-content ul.annotations {
         list-style-type: none !important;
         list-style-image: none !important;
