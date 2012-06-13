@@ -40,7 +40,6 @@ if (!PELAGIOS_SEARCH_MAIN_JS_RUN) { // Only run this script once per page
                     var widgetContext = {baseURL:            baseURL, 
                                      widgetID:           $(this).attr('id'), 
                                      displayMap:         true,
-                                     pelagiosAPIversion: 2,
                                      debug:              true,
                                      overlay:            false,
                                      templateDir:        baseURL+

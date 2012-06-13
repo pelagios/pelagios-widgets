@@ -49,7 +49,6 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                                      pleiadesID:         $(this).attr(
                                                          'data-pleiades_id'), 
                                      displayMap:         true,
-                                     pelagiosAPIversion: 1,
                                      debug:              true,
                                      overlay:            true,
                                      templateDir:        baseURL+
