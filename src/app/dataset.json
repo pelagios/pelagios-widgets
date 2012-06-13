@@ -1,0 +1,73 @@
+[{
+  "id": "b47df24737cd647789c7d61ede9fed09",
+  "title": "Arachne",
+  "iconFileName": "arachne.png",
+  "strapline": "A web research tool of the German Archaeological Institute for searching mass archaeological records"
+},
+{
+  "id": "6a39d0bc3c0fd4ef7d2a837b42cf46a1",
+  "title": "Google Ancient Places",
+  "iconFileName": "gap_logo.png",
+  "strapline":  "A Geographic Annotation Platform for reading texts spatially"
+}
+,
+{
+  "id": "2db51c1dd976f01bf993a02f959e18f8",
+  "title": "nomisma",
+  "iconFileName": "Greek.jpeg",
+  "strapline":  "Representing ancient coins online"
+}
+,
+{
+  "id": "XXX",
+  "title": "SPQR",
+  "iconFileName": "SPQR.png",
+  "strapline":  "From Roman inscriptions to resource descriptions"
+}
+,
+{
+  "id": "",
+  "title": "Regnum Francorum Online",
+  "iconFileName": "Regnum.png",
+  "strapline":  "Interactive Maps and Sources of Late Antique and Early Medieval Europe"
+}
+,
+{
+  "id": "21e48d8ca46f666467b81a551fbb1cb",
+  "title": "Perseus",
+  "iconFileName": "Perseus.png",
+  "strapline":  "Annotated occurrences of place entities in texts from the Perseus Digital Library"
+}
+,
+{
+  "id": "XXX",
+  "title": "CLAROS",
+  "iconFileName": "CLAROS.png",
+  "strapline":  "Aggregated search of art and archaeology data from the classical world and the far east across four millennia"
+}
+,
+{
+  "id": "739128af1e9613de03706a57cef46976",
+  "title": "Open Context",
+  "iconFileName": "open-context.png",
+  "strapline":  "Publications of research data in archaeology and related fields"
+}
+,
+{
+  "id": "467b9097b55b6e0831fe6760df93e7f2",
+  "title": "FASTI Online",
+  "iconFileName": "FASTI.png",
+  "strapline":  "A database of archaeological excavations since the year 2000"
+}
+,
+{
+  "id": "a306666ae581e8d611d56a1dfdaea256",
+  "title": "Ure Museum",
+  "iconFileName": "URE.png",
+  "strapline":  "University Museum of ancient Greek, Egyptian & a little Roman stuff"
+}
+
+
+]
+
+
