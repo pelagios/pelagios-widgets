@@ -40,6 +40,40 @@ function program1(depth0,data) {
   buffer += escapeExpression(stack1) + "\" />\r\n</a>\r\n";
   return buffer;}
 
+function program3(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\r\n<p><a href=\"http://www.flickr.com/groups/pleiades-places/pool/tags/pleiades%3Adepicts%3D";
+  foundHelper = helpers.pleiadesID;
+  stack1 = foundHelper || depth0.pleiadesID;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "pleiadesID", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "/\" target=\"_blank\">View all ";
+  foundHelper = helpers.photo;
+  stack1 = foundHelper || depth0.photo;
+  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.length);
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "photo.length", { hash: {} }); }
+  buffer += escapeExpression(stack1) + " photos on flickr</a></p>\r\n";
+  return buffer;}
+
+function program5(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\r\n<p><a href=\"http://www.flickr.com/photos/tags/pleiades%3Adepicts%3D";
+  foundHelper = helpers.pleiadesID;
+  stack1 = foundHelper || depth0.pleiadesID;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "pleiadesID", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "/\" target=\"_blank\">View all ";
+  foundHelper = helpers.photo;
+  stack1 = foundHelper || depth0.photo;
+  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.length);
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "photo.length", { hash: {} }); }
+  buffer += escapeExpression(stack1) + " photos on flickr</a></p>\r\n";
+  return buffer;}
+
   foundHelper = helpers.photo;
   stack1 = foundHelper || depth0.photo;
   stack2 = helpers.each;
@@ -49,17 +83,28 @@ function program1(depth0,data) {
   tmp1.inverse = self.noop;
   stack1 = stack2.call(depth0, stack1, tmp1);
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n<p><a href=\"http://www.flickr.com/groups/pleiades-places/pool/tags/pleiades%3Adepicts%3D";
-  foundHelper = helpers.pleiadesID;
-  stack1 = foundHelper || depth0.pleiadesID;
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "pleiadesID", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "/\" target=\"_blank\">View all ";
-  foundHelper = helpers.photos;
-  stack1 = foundHelper || depth0.photos;
-  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.length);
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "photos.length", { hash: {} }); }
-  buffer += escapeExpression(stack1) + " photos on flickr</a></p>\r\n";
+  buffer += "\r\n";
+  foundHelper = helpers.widgetContext;
+  stack1 = foundHelper || depth0.widgetContext;
+  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.pleiadesFlickrGroupOnly);
+  stack2 = helpers['if'];
+  tmp1 = self.program(3, program3, data);
+  tmp1.hash = {};
+  tmp1.fn = tmp1;
+  tmp1.inverse = self.noop;
+  stack1 = stack2.call(depth0, stack1, tmp1);
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n";
+  foundHelper = helpers.widgetContext;
+  stack1 = foundHelper || depth0.widgetContext;
+  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.pleiadesFlickrGroupOnly);
+  stack2 = helpers.unless;
+  tmp1 = self.program(5, program5, data);
+  tmp1.hash = {};
+  tmp1.fn = tmp1;
+  tmp1.inverse = self.noop;
+  stack1 = stack2.call(depth0, stack1, tmp1);
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n<p>The flickr photos shown here are those which have been given a Pleiades machine tag specifying this place. \r\n<a href=\"http://www.flickr.com/groups/pleiades-places/discuss/72157628435317307/\">See here for more information.</a></p>\r\n";
   return buffer;});
 })();

@@ -165,11 +165,15 @@
         }
 
         function showFlickrData(pleiadesID) {
-            var flickrURL = config.URL_FLICKR_SEARCH+
+            var groupURIComponent = "";
+            if (widgetContext.pleiadesFlickrGroupOnly) {
+                groupURIComponent = "&group_id=1876758@N22";
+            }
+            var url = config.URL_FLICKR_SEARCH+
                             "&machine_tags=pleiades:depicts="+pleiadesID+
-                            "&group_id=1876758@N22&tag_mode=all&api_key="+
+                            groupURIComponent+"&tag_mode=all&api_key="+
                             config.API_KEY_FLICKR+"&jsoncallback=?";  
-            util.getAPIData(flickrURL, displayFlickrData, false, config.TIMEOUT_FLICKR, 
+            util.getAPIData(url, displayFlickrData, false, config.TIMEOUT_FLICKR, 
                        false);
 
             /**
