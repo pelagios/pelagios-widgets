@@ -356,7 +356,7 @@
                 
                 // Get the subdataset results from the Pelagios Graph Explorer API
                 var url = config.URL_PELAGIOS_API_V2+'datasets/'+
-                          subdatasetID+'/annotations.json?filter_places='+encodeURIComponent(config.URL_PLEIADES+pleiadesID)+"&callback=?";                               
+                          subdatasetID+'/annotations.json?forPlace='+encodeURIComponent(config.URL_PLEIADES+pleiadesID)+"&callback=?";                               
                 util.getAPIData(url, function(json) {
                                     displaySubdataset(subdatasetID, json);
                 });
@@ -379,8 +379,12 @@
                 var annotation = new Array();
                 $.each(json.annotations, function(key, val) {
                     annotation[key] = {};
-                    annotation[key].label = val.title ? val.title: 
+                    if (val.hasOwnProperty('target_title')) {
+                        annotation[key].label = val.target_title;
+                    } else {
+                        annotation[key].label = val.title ? val.title: 
                                                             'Item '+ (key + 1);
+                    }
                     annotation[key].uri = val.hasTarget;
                 });
                  
