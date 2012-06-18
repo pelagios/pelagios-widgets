@@ -59,7 +59,7 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                          icon:               $(this).attr('data-icon') ? 
                                              ($(this).attr('data-icon') === 'true') :true,
                          newTab:             $(this).attr('data-new_tab') ? 
-                                             ($(this).attr('data-new_tab') === true):true,
+                                             ($(this).attr('data-new_tab') === 'true'):false,
                          templateDir:        baseURL+'template/',
                          imageDir:           baseURL+'images/',
                          iconDir:            baseURL+'images/partner_icons/',
@@ -67,7 +67,7 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                          cssDir:             baseURL+'css/',
                          pleiadesFlickrGroupOnly:  false,
                 };
-        
+                console.log(widgetContext);
                 if (util.includesGoogleMaps2()) {
                     widgetContext.displayMap = false;
                 }

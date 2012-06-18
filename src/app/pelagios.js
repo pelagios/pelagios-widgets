@@ -16,6 +16,7 @@
          'lib/text!template/search.tmpl',
          'lib/text!template/annotations.tmpl',
          'lib/text!template/search_results.tmpl',
+         'lib/text!template/new_tab.tmpl',
          'lib/text!app/dataset.json'
          ], 
         function ($, 
@@ -32,6 +33,7 @@
                   search_tmpl,
                   annotations_tmpl,
                   search_results_tmpl,
+                  new_tab_tmpl,
                   datasetJSON
                   ) {   
     var config = {
@@ -68,6 +70,7 @@
         eval(search_tmpl);
         eval(annotations_tmpl);
         eval(search_results_tmpl);
+        eval(new_tab_tmpl);
         
         var dataset = $.parseJSON(datasetJSON);
         
@@ -92,7 +95,6 @@
             $('#'+widgetContext.widgetID+'-content').append(html);
                 hidePlace();
             if (widgetContext.icon == true) {
-            
                 // Position the widget
                 $('#'+widgetContext.widgetID+'-container').hide();
                 $('#'+widgetContext.widgetID+'-icon').click(widgetPopUp);
@@ -119,23 +121,45 @@
         }
         
         function widgetPopUp() {
-            // Hide any currently open Pelagios widgets so that we don't
-            // have more than one widget open at once
-            $('.pelagios-container').hide(); 
-            
-            // Position the widget
-            $('#'+widgetContext.widgetID+'-container').show();
-            var icon_offset = $('#'+widgetContext.widgetID+'-icon').offset();
-            var container_offset = {top: $(window).scrollTop(), left: 200}
-            $('#'+widgetContext.widgetID+'-container').offset(container_offset);
-            
-            // Refresh the map for it to display properly
-            // Need to check that the refresh method exists as the 
-            // widget might be opened before the google maps api has 
-            // loaded and the map created
-            if (widgetContext.displayMap && 
-                placeMap.hasOwnProperty('refresh')) {   
-                placeMap.refresh();
+            // If the option has been set to open the widget in a new
+            // tab then do this
+            // NOTE - not working at the moment - see issue #55
+            if (widgetContext.newTab) {
+                // Open a new window/tab containing the widget with the 
+                // option not set and inheriting all the widgetContext
+                var w = window.open();
+                var html = Handlebars.templates['new_tab']({widgetContext: widgetContext});
+                console.log(html);
+                $(w.document.body).html(html);  
+                // Don't seem to be able to add the scripts via JQuery or 
+                // Handlebars
+                var script1   = document.createElement("script");
+                script1.type  = "text/javascript";
+                script1.src   = widgetContext.baseURL+'lib/require.js';
+                w.document.head.appendChild(script1);   
+                var script2   = document.createElement("script");
+                script2.type  = "text/javascript";
+                script2.src   = widgetContext.baseURL+'place.js';  
+                w.document.head.appendChild(script2);              
+            } else {
+                // Hide any currently open Pelagios widgets so that we don't
+                // have more than one widget open at once
+                $('.pelagios-container').hide(); 
+                
+                // Position the widget
+                $('#'+widgetContext.widgetID+'-container').show();
+                var icon_offset = $('#'+widgetContext.widgetID+'-icon').offset();
+                var container_offset = {top: $(window).scrollTop(), left: 200}
+                $('#'+widgetContext.widgetID+'-container').offset(container_offset);
+                
+                // Refresh the map for it to display properly
+                // Need to check that the refresh method exists as the 
+                // widget might be opened before the google maps api has 
+                // loaded and the map created
+                if (widgetContext.displayMap && 
+                    placeMap.hasOwnProperty('refresh')) {   
+                    placeMap.refresh();
+                }
             }
         }
 

@@ -21,6 +21,7 @@ lib/text!template/error.tmpl
 lib/text!template/search.tmpl
 lib/text!template/annotations.tmpl
 lib/text!template/search_results.tmpl
+lib/text!template/new_tab.tmpl
 lib/text!app/dataset.json
 app/pelagios.js
 lib/handlebars.js
@@ -44,6 +45,7 @@ lib/text!template/error.tmpl
 lib/text!template/search.tmpl
 lib/text!template/annotations.tmpl
 lib/text!template/search_results.tmpl
+lib/text!template/new_tab.tmpl
 lib/text!app/dataset.json
 app/pelagios.js
 lib/handlebars.js
