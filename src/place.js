@@ -51,6 +51,9 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                          displayMap:         $(this).attr('data-display_map') ? 
                                              !($(this).attr('data-display_map') === 'false'):
                                              true,
+                         onMouseOver:         $(this).attr('data-mouseover') ? 
+                                             ($(this).attr('data-mouseover') === 'true'):
+                                             false,
                          debug:              $(this).attr('data-debug') ? 
                                              ($(this).attr('data-debug') === 'true') :true,
                          icon:               $(this).attr('data-icon') ? 
@@ -64,7 +67,7 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                          cssDir:             baseURL+'css/',
                          pleiadesFlickrGroupOnly:  false,
                 };
-                console.log(widgetContext);        
+        
                 if (util.includesGoogleMaps2()) {
                     widgetContext.displayMap = false;
                 }

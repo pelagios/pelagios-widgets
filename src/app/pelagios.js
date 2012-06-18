@@ -91,31 +91,25 @@
             
             $('#'+widgetContext.widgetID+'-content').append(html);
                 hidePlace();
-            
             if (widgetContext.icon == true) {
-                console.log('Icon set to true');
+            
                 // Position the widget
                 $('#'+widgetContext.widgetID+'-container').hide();
-                $('#'+widgetContext.widgetID+'-icon').click(function() {
-                    // Hide any currently open Pelagios widgets so that we don't
-                    // have more than one widget open at once
-                    $('.pelagios-container').hide(); 
+                $('#'+widgetContext.widgetID+'-icon').click(widgetPopUp);
+                
+                if (widgetContext.onMouseOver) {
+                    $('#'+widgetContext.widgetID+'-icon').mouseover(widgetPopUp);
                     
-                    // Position the widget
-                    $('#'+widgetContext.widgetID+'-container').show();
-                    var icon_offset = $('#'+widgetContext.widgetID+'-icon').offset();
-                    var container_offset = {top: $(window).scrollTop(), left: 200}
-                    $('#'+widgetContext.widgetID+'-container').offset(container_offset);
-                    
-                    // Refresh the map for it to display properly
-                    // Need to check that the refresh method exists as the 
-                    // widget might be opened before the google maps api has 
-                    // loaded and the map created
-                    if (widgetContext.displayMap && 
-                        placeMap.hasOwnProperty('refresh')) {   
-                        placeMap.refresh();
-                    }
-                });
+                    // Clicking anywhere not on the widget closes the widget
+                    $(document).click(function() {
+                        $('#'+widgetContext.widgetID+'-container').hide();
+                    });
+                   $('#'+widgetContext.widgetID).click(function(e) {
+                        e.stopPropagation();
+                        return false;
+                   });
+                }
+                
                 $('#'+widgetContext.widgetID+'-close-widget').click(function() {
                     $('#'+widgetContext.widgetID+'-container').hide();
                 });
@@ -124,6 +118,26 @@
             displayPlace(widgetContext.pleiadesID);
         }
         
+        function widgetPopUp() {
+            // Hide any currently open Pelagios widgets so that we don't
+            // have more than one widget open at once
+            $('.pelagios-container').hide(); 
+            
+            // Position the widget
+            $('#'+widgetContext.widgetID+'-container').show();
+            var icon_offset = $('#'+widgetContext.widgetID+'-icon').offset();
+            var container_offset = {top: $(window).scrollTop(), left: 200}
+            $('#'+widgetContext.widgetID+'-container').offset(container_offset);
+            
+            // Refresh the map for it to display properly
+            // Need to check that the refresh method exists as the 
+            // widget might be opened before the google maps api has 
+            // loaded and the map created
+            if (widgetContext.displayMap && 
+                placeMap.hasOwnProperty('refresh')) {   
+                placeMap.refresh();
+            }
+        }
 
         
         this.setTypeSearch = function() {
