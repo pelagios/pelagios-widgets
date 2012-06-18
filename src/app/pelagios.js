@@ -91,8 +91,9 @@
             
             $('#'+widgetContext.widgetID+'-content').append(html);
                 hidePlace();
-        
-            if (widgetContext.overlay == true) {
+            
+            if (widgetContext.icon == true) {
+                console.log('Icon set to true');
                 // Position the widget
                 $('#'+widgetContext.widgetID+'-container').hide();
                 $('#'+widgetContext.widgetID+'-icon').click(function() {

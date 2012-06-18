@@ -38,17 +38,19 @@ if (!PELAGIOS_SEARCH_MAIN_JS_RUN) { // Only run this script once per page
                                     
                 $('.pelagios-search').each(function() {
                     var widgetContext = {baseURL:            baseURL, 
-                                     widgetID:           $(this).attr('id'), 
-                                     displayMap:         true,
-                                     debug:              true,
-                                     overlay:            false,
-                                     templateDir:        baseURL+
-                                                         'template/',
-                                     imageDir:           baseURL+'images/',
-                                     iconDir:            baseURL+'images/partner_icons/',
-                                     scriptDir:          baseURL+'scripts/',
-                                     cssDir:             baseURL+'css/' ,
-                                     pleiadesFlickrGroupOnly:  false                                     
+                        widgetID:           $(this).attr('id'), 
+                        displayMap:         $(this).attr('data-display_map') ? 
+                                            !($(this).attr('data-display_map') === 'false'):
+                                            true,
+                        debug:              $(this).attr('data-debug') ? 
+                                            ($(this).attr('data-debug') === 'true') :true,
+                        overlay:            false,
+                        templateDir:        baseURL+'template/',
+                        imageDir:           baseURL+'images/',
+                        iconDir:            baseURL+'images/partner_icons/',
+                        scriptDir:          baseURL+'scripts/',
+                        cssDir:             baseURL+'css/' ,
+                        pleiadesFlickrGroupOnly:  false                                     
                                     };
                     if (util.includesGoogleMaps2()) {
                         widgetContext.displayMap = false;

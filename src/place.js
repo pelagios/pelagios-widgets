@@ -44,34 +44,39 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                 // Get its widget ID and create the widget
                 // Make sure this script is only run once
                 $('.pelagios-place').each(function() {
-                    var widgetContext = {baseURL:            baseURL, 
-                                     widgetID:           $(this).attr('id'), 
-                                     pleiadesID:         $(this).attr(
-                                                         'data-pleiades_id'), 
-                                     displayMap:         true,
-                                     debug:              true,
-                                     overlay:            true,
-                                     templateDir:        baseURL+
-                                                         'template/',
-                                     imageDir:           baseURL+'images/',
-                                     iconDir:            baseURL+'images/partner_icons/',
-                                     scriptDir:          baseURL+'scripts/',
-                                     cssDir:             baseURL+'css/',
-                                     pleiadesFlickrGroupOnly:  false
-                                    };
-
-                    if (util.includesGoogleMaps2()) {
-                        widgetContext.displayMap = false;
-                    }
-                    if (widgetContext.debug) {
-                        console.log('CREATING WIDGET pleiadesID:'+
-                                    widgetContext.pleiadesID+' widgetID:'+
-                                    widgetContext.widgetID+' baseURL:'
-                                    +widgetContext.baseURL);
-                    }
-                    
-                    widget = new pelagios.Widget(widgetContext);
-                    widget.setTypePlace();
+                    var widgetContext = {
+                         baseURL:            baseURL, 
+                         widgetID:           $(this).attr('id'), 
+                         pleiadesID:         $(this).attr('data-pleiades_id'), 
+                         displayMap:         $(this).attr('data-display_map') ? 
+                                             !($(this).attr('data-display_map') === 'false'):
+                                             true,
+                         debug:              $(this).attr('data-debug') ? 
+                                             ($(this).attr('data-debug') === 'true') :true,
+                         icon:               $(this).attr('data-icon') ? 
+                                             ($(this).attr('data-icon') === 'true') :true,
+                         newTab:             $(this).attr('data-new_tab') ? 
+                                             ($(this).attr('data-new_tab') === true):true,
+                         templateDir:        baseURL+'template/',
+                         imageDir:           baseURL+'images/',
+                         iconDir:            baseURL+'images/partner_icons/',
+                         scriptDir:          baseURL+'scripts/',
+                         cssDir:             baseURL+'css/',
+                         pleiadesFlickrGroupOnly:  false,
+                };
+                console.log(widgetContext);        
+                if (util.includesGoogleMaps2()) {
+                    widgetContext.displayMap = false;
+                }
+                if (widgetContext.debug) {
+                    console.log('CREATING WIDGET pleiadesID:'+
+                                widgetContext.pleiadesID+' widgetID:'+
+                                widgetContext.widgetID+' baseURL:'
+                                +widgetContext.baseURL);
+                }
+                
+                widget = new pelagios.Widget(widgetContext);
+                widget.setTypePlace();
                 });
             });
         }
