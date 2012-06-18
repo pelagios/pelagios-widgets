@@ -17,7 +17,8 @@
          'lib/text!template/annotations.tmpl',
          'lib/text!template/search_results.tmpl',
          'lib/text!template/new_tab.tmpl',
-         'lib/text!app/dataset.json'
+         'lib/text!app/dataset.json',
+         'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js'
          ], 
         function ($, 
                   util, 
@@ -77,7 +78,7 @@
         if (typeof($('#'+widgetContext.widgetID)) == undefined) {
             debug('ERROR: $(#'+widgetContext.widgetID+') is undefined');
         }
-        // console.log(document.compatMode);
+
         // Load the style sheet 
         $('head').append('<link rel="stylesheet" type="text/css" href="'+
                          widgetContext.cssDir+
@@ -86,7 +87,7 @@
         
         var html = Handlebars.templates['widget_container']({widgetContext: widgetContext});
         $('#'+widgetContext.widgetID).append(html);
-          
+        $('#'+widgetContext.widgetID+'-container').draggable();  
                  
         this.setTypePlace = function() { 
             debug('SETTING WIDGET TYPE: PLACE');
@@ -129,7 +130,6 @@
                 // option not set and inheriting all the widgetContext
                 var w = window.open();
                 var html = Handlebars.templates['new_tab']({widgetContext: widgetContext});
-                console.log(html);
                 $(w.document.body).html(html);  
                 // Don't seem to be able to add the scripts via JQuery or 
                 // Handlebars
@@ -144,7 +144,7 @@
             } else {
                 // Hide any currently open Pelagios widgets so that we don't
                 // have more than one widget open at once
-                $('.pelagios-container').hide(); 
+                $('.pelagios .container').hide(); 
                 
                 // Position the widget
                 $('#'+widgetContext.widgetID+'-container').show();
@@ -300,7 +300,6 @@
         function showPelagiosData(pleiadesID) {                   
             var pelagiosURL = config.URL_PELAGIOS_API_V2 +"places/"+
                                   encodeURIComponent(config.URL_PLEIADES+pleiadesID)+"/datasets.json?callback=?";
-
             util.getAPIData(pelagiosURL, displayPelagiosData, false, 
                        config.TIMEOUT_PELAGIOS, false);  
 
@@ -363,7 +362,7 @@
                               subdataset[i].id).hide();                    
                         }  
                     } else {
-                        debug('ERROR: Could not find info for root dataset '+rootDataset.title);
+                        debug('ERROR: Could not find info for root dataset '+rootDataset.title+' '+pelagiosURL);
                     }                    
                 });
             } 
