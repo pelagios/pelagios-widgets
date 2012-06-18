@@ -21,7 +21,7 @@
     }
     
     .pelagios .container {
-        width: 500px !important;
+        width: 550px !important;
         padding: 5px 15px 15px !important;
         /* Rounded corners */
         border-radius: 15px !important;
@@ -60,6 +60,7 @@
         border-radius: 15px !important;
         -moz-border-radius: 15px !important;
         color: #1C3664 !important;
+        padding: 0 0 0 0 !important;
     }
 
     .pelagios  .footer {
@@ -84,7 +85,7 @@
         color: #1c3664 !important;
     }
 
-    /* CSS for heading and Pleiades icon */
+
     .pelagios  h1 {
         font-size: 1.3em !important;
         padding: 10px 0 5px 20px !important;
