@@ -17,12 +17,12 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
 
     require.config({
         paths: {
-            jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min',
+            jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min'
         },
         priority: ['jquery'],
         jQuery: "1.7.1",
         waitSeconds : 5,
-        baseUrl: baseURL,            
+        baseUrl: baseURL            
     })
 
     require(    
@@ -65,9 +65,9 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                          iconDir:            baseURL+'images/partner_icons/',
                          scriptDir:          baseURL+'scripts/',
                          cssDir:             baseURL+'css/',
-                         pleiadesFlickrGroupOnly:  false,
+                         pleiadesFlickrGroupOnly:  false
                 };
-                console.log(widgetContext);
+
                 if (util.includesGoogleMaps2()) {
                     widgetContext.displayMap = false;
                 }
