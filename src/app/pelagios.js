@@ -18,7 +18,7 @@
          'lib/text!template/search_results.tmpl',
          'lib/text!template/new_tab.tmpl',
          'lib/text!app/dataset.json',
-         'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js'
+         'jqueryui'
          ], 
         function ($, 
                   util, 
@@ -87,8 +87,8 @@
         
         var html = Handlebars.templates['widget_container']({widgetContext: widgetContext});
         $('#'+widgetContext.widgetID).append(html);
-        $('#'+widgetContext.widgetID+'-container').draggable();  
-                 
+        $('#'+widgetContext.widgetID+'-container').draggable();     
+        
         this.setTypePlace = function() { 
             debug('SETTING WIDGET TYPE: PLACE');
             var html = Handlebars.templates['place']({widgetContext: widgetContext});
