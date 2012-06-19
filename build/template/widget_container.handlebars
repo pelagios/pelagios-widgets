@@ -1,0 +1,18 @@
+<div id="{{widgetContext.widgetID}}-container" class="container">    
+    <div class="header"> 
+        <img class="logo" src="{{widgetContext.imageDir}}icons/pelagios-logo.png" alt="View Pelagios infromation"/>    
+        {{#if widgetContext.icon}}
+        <a href="" class="close">
+        <img src="{{widgetContext.baseURL}}images/icons/close-button.png" alt="Close Pelagios information" />
+        </a>    
+        {{/if}}
+    </div>    
+    <div class="content-wrapper">
+        <div id="{{widgetContext.widgetID}}-content">
+        </div>
+        <div class="footer"></div>                           
+    </div>
+</div>    
+{{#if widgetContext.icon}}
+<img id="{{widgetContext.widgetID}}-icon" class="icon" src="{{widgetContext.baseURL}}images/icons/pelagios.png" alt="Information about this place from Pelagios partners"/> 
+{{/if}}  

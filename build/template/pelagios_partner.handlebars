@@ -1,0 +1,23 @@
+<ul class="subdatasets" id="{{widgetContext.widgetID}}-subdatasets-{{rootDatasetID}}">
+{{#each subdataset}}
+
+<li id="{{this.widgetContext.widgetID}}-subdataset-{{this.id}}">
+<span id="{{this.widgetContext.widgetID}}-subdataset_title-{{this.id}}">
+    {{this.title}}
+    <span id ="{{this.widgetContext.widgetID}}-subdataset_hits-{{this.id}}" class="link">
+    {{this.references}} hit{{#if this.multipleReferences}}s{{/if}}
+    </span>
+    <img id="{{this.widgetContext.widgetID}}-toggle-subdataset-{{this.id}}" 
+         src = "{{this.widgetContext.imageDir}}icons/right-arrow.png"  /> 
+</span>
+    <div id="{{this.widgetContext.widgetID}}-subdataset_content-{{this.id}}">
+
+        <div id="{{this.widgetContext.widgetID}}-annotations-{{this.id}}" class="annotations">
+        </div>
+        <div id="{{this.widgetContext.widgetID}}-subdataset_pagination-{{this.id}}" class="subdataset_pagination">
+        </div>
+    </div>
+</li>
+
+{{/each}}  
+</ul>         

@@ -1,0 +1,75 @@
+(function() {
+  var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+templates['section'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  var buffer = "", stack1, foundHelper, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"section\" id=\"";
+  foundHelper = helpers.widgetContext;
+  stack1 = foundHelper || depth0.widgetContext;
+  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.widgetID);
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "widgetContext.widgetID", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "-";
+  foundHelper = helpers.name;
+  stack1 = foundHelper || depth0.name;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "\">\r\n<div class=\"section-header\" id=\"";
+  foundHelper = helpers.widgetContext;
+  stack1 = foundHelper || depth0.widgetContext;
+  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.widgetID);
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "widgetContext.widgetID", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "-header-";
+  foundHelper = helpers.name;
+  stack1 = foundHelper || depth0.name;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "\">\r\n<img src=\"";
+  foundHelper = helpers.iconURL;
+  stack1 = foundHelper || depth0.iconURL;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "iconURL", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "\" class=\"section-icon\" alt=\"\" />\r\n<h2>";
+  foundHelper = helpers.title;
+  stack1 = foundHelper || depth0.title;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "title", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "</h2>\r\n<img class=\"section-toggle\" id=\"";
+  foundHelper = helpers.widgetContext;
+  stack1 = foundHelper || depth0.widgetContext;
+  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.widgetID);
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "widgetContext.widgetID", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "-toggle-";
+  foundHelper = helpers.name;
+  stack1 = foundHelper || depth0.name;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "\" \r\n     src=\"";
+  foundHelper = helpers.widgetContext;
+  stack1 = foundHelper || depth0.widgetContext;
+  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.baseURL);
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "widgetContext.baseURL", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "images/icons/right-arrow.png\" alt=\"Toggle section\"/>\r\n<p class=\"section-strapline\">";
+  foundHelper = helpers.strapline;
+  stack1 = foundHelper || depth0.strapline;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "strapline", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "</p>\r\n</div>\r\n<div class=\"section-content\" id=\"";
+  foundHelper = helpers.widgetContext;
+  stack1 = foundHelper || depth0.widgetContext;
+  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.widgetID);
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "widgetContext.widgetID", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "-content-";
+  foundHelper = helpers.name;
+  stack1 = foundHelper || depth0.name;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "\">\r\n</div></div>\r\n";
+  return buffer;});
+})();

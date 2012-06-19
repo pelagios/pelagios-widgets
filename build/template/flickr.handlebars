@@ -1,0 +1,13 @@
+{{#each photo}}
+<a href="http://www.flickr.com/photos/{{this.owner}}/{{this.id}}" target="_blank">
+<img src="http://farm{{this.farm}}.staticflickr.com/{{this.server}}/{{this.id}}_{{this.secret}}_t.jpg" alt="{{pthis.title}}" />
+</a>
+{{/each}}
+{{#if widgetContext.pleiadesFlickrGroupOnly}}
+<p><a href="http://www.flickr.com/groups/pleiades-places/pool/tags/pleiades%3Adepicts%3D{{pleiadesID}}/" target="_blank">View all {{photo.length}} photos on flickr</a></p>
+{{/if}}
+{{#unless widgetContext.pleiadesFlickrGroupOnly}}
+<p><a href="http://www.flickr.com/photos/tags/pleiades%3Adepicts%3D{{pleiadesID}}/" target="_blank">View all {{photo.length}} photos on flickr</a></p>
+{{/unless}}
+<p>The flickr photos shown here are those which have been given a Pleiades machine tag specifying this place. 
+<a href="http://www.flickr.com/groups/pleiades-places/discuss/72157628435317307/">See here for more information.</a></p>
