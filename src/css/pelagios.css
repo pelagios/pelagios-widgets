@@ -181,7 +181,7 @@
     }
     
     .pelagios .subdataset_pagination .current {
-        text-decoration: underline;
+        text-decoration: underline !important;
     }
     
     .pelagios .subdataset_pagination span{

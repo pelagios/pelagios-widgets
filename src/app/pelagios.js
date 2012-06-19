@@ -118,8 +118,11 @@
                     $('#'+widgetContext.widgetID+'-container').hide();
                 });
             }
-            
             displayPlace(widgetContext.pleiadesID);
+        }
+        
+        function addAboutSection() {
+            
         }
         
         function widgetPopUp() {
@@ -190,8 +193,17 @@
             placeMap = {};
             clearPlace();
             showPleiadesData(pleiadesID);
+            showAboutInformation();
             showPelagiosData(pleiadesID);   
             showFlickrData(pleiadesID);
+        }
+        
+        function showAboutInformation() {
+            addSection('about', 'About Pelagios and this widget', widgetContext.imageDir+'partner_icons/pelagios.png', '');
+            var html ='This widget displays data from the Pelagios project partners</p>';
+            
+            html += '<p>View the <a href="http://pelagios-project.blogspot.co.uk/">Pelagios website</a> for more information</a>';
+            $('#'+widgetContext.widgetID+'-content-about').append(html);
         }
         
        /**
