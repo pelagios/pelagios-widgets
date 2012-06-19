@@ -25,7 +25,9 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
         waitSeconds : 5,
         baseUrl: baseURL,
         shim: {
-            'jqueryui': 'jquery'
+            'jqueryui': {
+                deps: ['jquery'],
+             }
         }        
     })
 
