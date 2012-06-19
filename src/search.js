@@ -21,7 +21,12 @@ if (!PELAGIOS_SEARCH_MAIN_JS_RUN) { // Only run this script once per page
                     priority: ['jquery'],
                     jQuery: "1.7.1",
                     waitSeconds : 5,
-                    baseUrl: baseURL            
+                    baseUrl: baseURL,
+                    shim: {
+                        'jqueryui': {
+                            deps: ['jquery'],
+                         }
+                    }                      
     });
 
     require(    
