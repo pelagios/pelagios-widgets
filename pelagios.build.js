@@ -4,13 +4,12 @@
     dir: "build",
     
     optimizeCss: "standard",
-
-    // inlining ftw
     inlineText: true,   
     optimizeAllPluginResources: true,
     
     paths: {
         "jquery": "empty:",
+        "jqueryui": "empty:"
     },
     modules: [
         {

@@ -18,7 +18,8 @@
          'lib/text!template/search_results.tmpl',
          'lib/text!template/new_tab.tmpl',
          'lib/text!app/dataset.json',
-         'jqueryui'
+         'jqueryui',
+         'lib/jquery_pagination'
          ], 
         function ($, 
                   util, 
@@ -49,7 +50,8 @@
         MSG_PLACE_NOT_FOUND:         'The place specified for this widget does not exist in the Pleiades gazetteer.',
         MSG_TITLE_PLACE_NOT_FOUND:   'Error: Unknown Place',
         MSG_PLEIADES_TIMEOUT:        'We cannot display the place name and map at the moment because the Pleiades website is not responding. Apologies for the inconvenience and please try again later.',
-        MSG_TITLE_PLEIADES_TIMEOUT:  'Error: Pleiades not responding'
+        MSG_TITLE_PLEIADES_TIMEOUT:  'Error: Pleiades not responding',
+        NUM_ANNOTATIONS_TO_DISPLAY:  20
     }
     
     function Widget(widgetContext) {
@@ -90,7 +92,6 @@
         $('#'+widgetContext.widgetID+'-container').draggable();     
         
         this.setTypePlace = function() { 
-            debug('SETTING WIDGET TYPE: PLACE');
             var html = Handlebars.templates['place']({widgetContext: widgetContext});
             
             $('#'+widgetContext.widgetID+'-content').append(html);
@@ -165,8 +166,6 @@
 
         
         this.setTypeSearch = function() {
-            debug('SETTING WIDGET TYPE: SEARCH');
-
             // Add the template for the search form, search results, and template for displaying a place
             // then hide everything apart from the search form
             var html = Handlebars.templates['search']({widgetContext: widgetContext});
@@ -308,25 +307,18 @@
             * json - the data returned by the Pelagios Graph Explorer API for the
             * specified location
             */        
-            function displayPelagiosData(json) {
-                // We need to sort the subdatasets into their root datasets so that
-                // we can display them together
-                var items = [];
-                var data = {};
-
-                // Loop through the root datasets - lots of room for making this 
-                // more efficient!
+            function displayPelagiosData(json) {                
+                // Loop through the root datasets 
                 $.each(json, function(key, rootDataset) {
-                    // This is a workaround to get round the fact
-                    // that if there are only results in one subset then
-                    // the subset is returned, not the root dataset
+                    // If there are only results in one subset then
+                    // the subset is returned, not the root dataset, 
+                    // so need to replace with the root dataset
                     if (rootDataset.hasOwnProperty('root_dataset')) {
                         rootDataset = rootDataset.root_dataset;
                     }
                      
-                    var rootDatasetInfo;
+                    var rootDatasetInfo; 
                     rootDatasetID = rootDataset.uri.replace(/http:\/\/pelagios.dme.ait.ac.at\/api\/datasets\//g, '');
-
                     rootDatasetInfo = getDatasetInfo(rootDatasetID);
                     
                     if (typeof rootDatasetInfo !== 'undefined') {                     
@@ -335,6 +327,7 @@
                                    widgetContext.iconDir+rootDatasetInfo.iconFileName, 
                                    rootDatasetInfo.strapline) ;
 
+                        // Put all the subset information into an array           
                         var subdataset = new Array(); 
                         if (typeof rootDataset.subsets !== 'undefined') {                           
                             for (var i = 0; i < rootDataset.subsets.length; i++) {
@@ -342,14 +335,22 @@
                                 subdataset[i].widgetContext = widgetContext;
                                 subdataset[i].title         = rootDataset.subsets[i].title;
                                 subdataset[i].id            = rootDataset.subsets[i].uri.replace(/http:\/\/pelagios.dme.ait.ac.at\/api\/datasets\//g, '');
+                                subdataset[i].references    = rootDataset.subsets[i].annotations_referencing_place;
+                                subdataset[i].multipleReferences = (subdataset[i].references > 1 ) ? true : false;
+                                subdataset[i].anyReferences = (subdataset[i].references > 0) ? true : false;
                             }
-                        } else { // If not subdatasets
+                        } else { // If no subdatasets, then create one for the
+                                 // root dataset
                             subdataset[0] = {};
                             subdataset[0].widgetContext = widgetContext;
                             subdataset[0].title         = rootDataset.title;
-                            subdataset[0].id           = rootDatasetID;                  
+                            subdataset[0].id            = rootDatasetID;  
+                            subdataset[0].references    =   rootDataset.annotations_referencing_place;                         
+                            subdataset[0].multipleReferences = (subdataset[0].references > 1 ) ? true : false;
                         }
                         
+                        // Now add the HTML for the root datasets and divs 
+                        // to hang the subdataset info on
                         var data = {subdataset: subdataset, 
                                     rootDatasetID: rootDatasetID,
                                     widgetContext: widgetContext};
@@ -358,37 +359,94 @@
                         $('#'+widgetContext.widgetID+'-subdatasets-'+rootDatasetID).
                           css('list-style-image', 
                           'url('+widgetContext.imageDir+'icons/bullet.png)');
-                        // Add the handler to open and close the subdataset 
+                        
+                        // Add the handler to open and close each subdataset 
                         // content and start with the content hidden
-                        for (var i = 0; i < subdataset.length; i++) {   
-                            $('#'+widgetContext.widgetID+'-subdataset-'+
-                              subdataset[i].id).click(
-                                                     {id: subdataset[i].id},
-                                                     clickDisplaySubdataset);                            
-                            $('#'+widgetContext.widgetID+'-subdataset_content-'+
-                              subdataset[i].id).hide();                    
-                        }  
+                        for (var i = 0; i < subdataset.length; i++) {
+                           subdatasetSetup(subdataset[i]);                             
+                        } 
                     } else {
                         debug('ERROR: Could not find info for root dataset '+rootDataset.title+' '+pelagiosURL);
                     }                    
                 });
             } 
+            
+            function subdatasetSetup(subdataset) {
+                $('#'+widgetContext.widgetID+'-subdataset_title-'+
+                  subdataset.id).click(
+                                         {id: subdataset.id},
+                                         clickDisplaySubdataset);                            
+                $('#'+widgetContext.widgetID+'-subdataset_content-'+
+                  subdataset.id).hide();    
+                
+                var callback = function(newPageIndex) {
+                    handlePaginationClick(newPageIndex, subdataset.id); 
+                }
+                
+                $('#'+widgetContext.widgetID+
+                  '-subdataset_pagination-'+
+                  subdataset.id).pagination(
+                  subdataset.references,
+                  {items_per_page: config.NUM_ANNOTATIONS_TO_DISPLAY, 
+                   callback:       callback
+                  }); 
 
+                
+                
+                // Add the data for the first page of results
+                handlePaginationClick(0, subdataset.id);                 
+            }
+            
+            function handlePaginationClick(newPageIndex, subdatasetID) {
+                var url = config.URL_PELAGIOS_API_V2+'datasets/'+
+                          subdatasetID+
+                          '/annotations.json?forPlace='+
+                          encodeURIComponent(config.URL_PLEIADES+pleiadesID)+
+                          "&limit="+config.NUM_ANNOTATIONS_TO_DISPLAY+
+                          "&offset="+newPageIndex*config.NUM_ANNOTATIONS_TO_DISPLAY+
+                          "&callback=?";                               
+
+                // Need to use a closure to be able to get
+                // at the subset ID
+                var success = function(json) {
+                    if (typeof json.annotations != 'undefined' &&
+                        json.annotations.length > 0) {
+                        displayAnnotations(json.annotations, subdatasetID);
+                    }
+                }
+
+                util.getAPIData(url, success);
+                return false;
+            }
+            
+            function displayAnnotations(annotations, subsetID) {
+                var annotation = new Array();
+
+                $.each(annotations, function (key, val) {
+                   annotation[key] = {};
+                   if (val.hasOwnProperty('target_title')) {
+                     annotation[key].label = val.target_title;
+                   } else {
+                     annotation[key].label = val.title ? val.title : 'Item ' + (key + 1);
+                   }
+                   annotation[key].uri = val.hasTarget;
+                 });
+                 var data = {
+                   subdatasetID: subsetID,
+                   annotation: annotation,
+                   widgetContext: widgetContext
+                 };
+                 var html = Handlebars.templates['annotations'](data);
+                 
+                 $('#' + widgetContext.widgetID + '-annotations-' + subsetID).empty();
+                 $('#' + widgetContext.widgetID + '-annotations-' + subsetID).append(html);
+                 $('#' + widgetContext.widgetID + '-subdataset-' + subsetID).focus();   
+            } 
            /**
             * Callback function when somebody clicks to view hits for a subdataset
             */
             function clickDisplaySubdataset(data) {   
                 var subdatasetID = data.data.id;
-
-                // Show the loading message and hide the annotations pane until we 
-                // get the results to display
-                $('#'+widgetContext.widgetID+'-annotations_pane-'+
-                  subdatasetID).hide(); 
-                var loadingElement = $('#'+widgetContext.widgetID+'-loading-'+
-                                       subdatasetID);
-                loadingElement.append('<p>Loading</p>');
-                loadingElement.show();
-                
                 // If the annotations pane is open, underline the number of hits, 
                 // if it is closed, remove the underline
                 toggleSelectedLink(widgetContext.widgetID+'-subdataset_hits-'+
@@ -398,47 +456,6 @@
                   subdatasetID).toggle();  
                 toggleIcon(widgetContext.widgetID+'-toggle-subdataset-'+
                            subdatasetID);
-                
-                // Get the subdataset results from the Pelagios Graph Explorer API
-                var url = config.URL_PELAGIOS_API_V2+'datasets/'+
-                          subdatasetID+'/annotations.json?forPlace='+encodeURIComponent(config.URL_PLEIADES+pleiadesID)+"&callback=?";                               
-                util.getAPIData(url, function(json) {
-                                    displaySubdataset(subdatasetID, json);
-                });
-            }
-
-            
-           /**
-            * Display the data from a subdataset using the json data obtained
-            */        
-            function displaySubdataset(subdatasetID, json) {
-                // Hide the 'loading' message and display the annotations pane
-                // where we will put the annotations
-                $('#'+widgetContext.widgetID+'-loading-' + subdatasetID).hide();            
-                var paneElement = $('#'+widgetContext.widgetID+
-                                    '-annotations_pane-'+subdatasetID);
-                paneElement.show();
-                paneElement.text('');
-               
-                // Loop through the subdataset and display the items as a list
-                var annotation = new Array();
-                $.each(json.annotations, function(key, val) {
-                    annotation[key] = {};
-                    if (val.hasOwnProperty('target_title')) {
-                        annotation[key].label = val.target_title;
-                    } else {
-                        annotation[key].label = val.title ? val.title: 
-                                                            'Item '+ (key + 1);
-                    }
-                    annotation[key].uri = val.hasTarget;
-                });
-                 
-                var data = {subdatasetID: subdatasetID, 
-                            annotation: annotation,
-                            widgetContext: widgetContext};
-                var html = Handlebars.templates['annotations'](data);
-            
-            $('#'+widgetContext.widgetID+'-annotations_pane-'+subdatasetID).append(html);
             }
             
            /**

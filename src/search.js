@@ -15,18 +15,22 @@ if (!PELAGIOS_SEARCH_MAIN_JS_RUN) { // Only run this script once per page
     var baseURL = src.replace(/search.js/g, '');
 
     require.config({
-                    paths: {
-                        jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min',
-                    },
-                    priority: ['jquery'],
-                    jQuery: "1.7.1",
-                    waitSeconds : 5,
-                    baseUrl: baseURL,
-                    shim: {
-                        'jqueryui': {
-                            deps: ['jquery'],
-                         }
-                    }                      
+        paths: {
+            jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min',
+            jqueryui: 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min'
+       },
+        priority: ['jquery'],
+        jQuery: "1.7.1",
+        waitSeconds : 5,
+        baseUrl: baseURL,
+        shim: {
+            'jqueryui': {
+                deps: ['jquery'],
+             },
+             'lib/jquery_pagination' : {
+                deps: ['jquery']
+             }
+        }                        
     });
 
     require(    

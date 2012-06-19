@@ -27,6 +27,9 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
         shim: {
             'jqueryui': {
                 deps: ['jquery'],
+             },
+             'lib/jquery_pagination' : {
+                deps: ['jquery']
              }
         }        
     })

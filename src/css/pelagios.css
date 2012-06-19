@@ -168,14 +168,26 @@
         color: #1c3664 !important;
     }
 
-    .pelagios  .section-content .annotations_pane {
-        width: 300px !important;
-        border: solid 1px  #4F87D1 !important;
+    .pelagios  .section-content .annotations {
+
         padding: 0 !important;
         margin: 10px 5px 5px 0 !important;
-        height: 100px !important;
-        overflow: scroll !important;
+
     }
+    
+    .pelagios .subdataset_pagination a {
+        margin: 10px 5px 5px 5px !important;
+        font-size: 0.7em !important;
+    }
+    
+    .pelagios .subdataset_pagination .current {
+        text-decoration: underline;
+    }
+    
+    .pelagios .subdataset_pagination span{
+        margin: 10px 5px 5px 5px !important;
+        font-size: 0.7em !important;
+    }    
 
     .pelagios   .section-content ul.subdatasets {
         list-style-type: disc !important;
