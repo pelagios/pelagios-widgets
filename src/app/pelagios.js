@@ -313,10 +313,17 @@
                 // we can display them together
                 var items = [];
                 var data = {};
-                
+
                 // Loop through the root datasets - lots of room for making this 
                 // more efficient!
                 $.each(json, function(key, rootDataset) {
+                    // This is a workaround to get round the fact
+                    // that if there are only results in one subset then
+                    // the subset is returned, not the root dataset
+                    if (rootDataset.hasOwnProperty('root_dataset')) {
+                        rootDataset = rootDataset.root_dataset;
+                    }
+                     
                     var rootDatasetInfo;
                     rootDatasetID = rootDataset.uri.replace(/http:\/\/pelagios.dme.ait.ac.at\/api\/datasets\//g, '');
 
