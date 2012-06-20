@@ -11,12 +11,22 @@
         "jquery": "empty:",
         "jqueryui": "empty:"
     },
+            shim: {
+            'jqueryui': {
+                deps: ['jquery'],
+             },
+             'lib/jquery_pagination' : {
+                deps: ['jquery']
+             }
+        },  
     modules: [
         {
-            name: "place"
+            name: "place",
+            exclude: ["jquery", "jqueryui"]
         },
         {
-            name: "search"
+            name: "search",
+            exclude: ["jquery", "jqueryui"]
         }
     ]
 })
