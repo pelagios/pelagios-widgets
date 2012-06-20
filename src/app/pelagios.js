@@ -493,60 +493,62 @@
         }
       
         function displaySearchResultsData(json) {
-            debug('SEARCH DATA RECEIVED');
-            
-             $('#'+widgetContext.widgetID+'-search-map').empty();
-             $('#'+widgetContext.widgetID+'-search-results').empty();
-             $('#'+widgetContext.widgetID+'-pleiades').empty();
-             $('#'+widgetContext.widgetID+'-sections').empty();
-            
-            // Put the data into a more useful form
-            var places = new Array();
-            $.each(json, function(key, val) { 
-                place = {};
-                place.label = val.label;
-                place.pleiadesID = val.uri.replace(/.*places.*F/g, '');
-                place.geojson = val;
-                place.content = '<h2>'+place.label+'</h2>';
-                place.content += '<p id="'+widgetContext.widgetID+'-info-'+
-                                 place.pleiadesID+'">View info</p>';
-                place.widgetID = widgetContext.widgetID;  //Hack                             
-                places[key] = place;
-            });
-            
-            var data = {place: places, widgetContext: widgetContext, searchString: searchString}
-            // Display the search results
-            var html = Handlebars.templates['search_results'](data);
-            $('#'+widgetContext.widgetID+'-search-results').append(html);
-            if (widgetContext.displayMap) {            
-                searchMap = new search_map.SearchMap(widgetContext.widgetID +
-                                "-search-map_canvas");  
-            }
-                       
-            $.each(places, function(key, place) {
-                if (widgetContext.displayMap) {    
-                    searchMap.addMarker(place.geojson, place.label, 
-                                        place.content, function() {
-                                            onClickHandler(place.pleiadesID);
-                                        }); 
+            $('#'+widgetContext.widgetID+'-search-map').empty();
+            $('#'+widgetContext.widgetID+'-search-results').empty();
+            $('#'+widgetContext.widgetID+'-pleiades').empty();
+            $('#'+widgetContext.widgetID+'-sections').empty();
+             
+            if (json.length > 0) {
+                // Put the data into a more useful form
+                var places = new Array();
+                $.each(json, function(key, val) { 
+                    place = {};
+                    place.label = val.label;
+                    place.pleiadesID = val.uri.replace(/.*places.*F/g, '');
+                    place.geojson = val;
+                    place.content = '<h2>'+place.label+'</h2>';
+                    place.content += '<p id="'+widgetContext.widgetID+'-info-'+
+                                     place.pleiadesID+'">View info</p>';
+                    place.widgetID = widgetContext.widgetID;  //Hack                             
+                    places[key] = place;
+                });
+                
+                var data = {place: places, widgetContext: widgetContext, searchString: searchString}
+                // Display the search results
+                var html = Handlebars.templates['search_results'](data);
+                $('#'+widgetContext.widgetID+'-search-results').append(html);
+                if (widgetContext.displayMap) {            
+                    searchMap = new search_map.SearchMap(widgetContext.widgetID +
+                                    "-search-map_canvas");  
                 }
+                           
+                $.each(places, function(key, place) {
+                    if (widgetContext.displayMap) {    
+                        searchMap.addMarker(place.geojson, place.label, 
+                                            place.content, function() {
+                                                onClickHandler(place.pleiadesID);
+                                            }); 
+                    }
 
-                $('#'+widgetContext.widgetID+'-place-'+place.pleiadesID).click(
-                    function() {
-                        onClickHandler(place.pleiadesID);
-                    }); 
-                   
-            });
-            
-            function onClickHandler(pleiadesID) {
-                $('.pelagios-search-result-list li').css('text-decoration', 'none');
-                 $('.pelagios-search-result-list li').css('font-weight', 'normal');
-                $('#'+widgetContext.widgetID+'-place-'+pleiadesID).css('text-decoration', 'underline');
-                $('#'+widgetContext.widgetID+'-place-'+pleiadesID).css('font-weight', 'bold');
-                displayPlace(pleiadesID);
+                    $('#'+widgetContext.widgetID+'-place-'+place.pleiadesID).click(
+                        function() {
+                            onClickHandler(place.pleiadesID);
+                        }); 
+                });
+                
+                function onClickHandler(pleiadesID) {
+                    $('.pelagios-search-result-list li').css('text-decoration', 'none');
+                     $('.pelagios-search-result-list li').css('font-weight', 'normal');
+                    $('#'+widgetContext.widgetID+'-place-'+pleiadesID).css('text-decoration', 'underline');
+                    $('#'+widgetContext.widgetID+'-place-'+pleiadesID).css('font-weight', 'bold');
+                    displayPlace(pleiadesID);
+                }
+                
+                showSearchResults();
+            } else { // No results
+                $('#'+widgetContext.widgetID+'-search-results').append("<h3 class='no-search-results'>No matches found for '"+searchString+"'</h3>");
+                $('#'+widgetContext.widgetID+'-search-results').show();
             }
-            
-            showSearchResults();
         }
         
         function hideSearchResults() {

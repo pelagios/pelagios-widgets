@@ -169,19 +169,20 @@
     }
 
     .pelagios  .section-content .annotations {
-
         padding: 0 !important;
-        margin: 10px 5px 5px 0 !important;
+        margin: 10px 5px 5px 10px !important;
 
     }
     
     .pelagios .subdataset_pagination a {
+        color: #4F87D1 !important;
         margin: 10px 5px 5px 5px !important;
         font-size: 0.7em !important;
     }
     
     .pelagios .subdataset_pagination .current {
-        text-decoration: underline !important;
+        color: #1c3664 !important;
+                font-weight: bold;
     }
     
     .pelagios .subdataset_pagination span{
@@ -200,7 +201,7 @@
     }
     
     .pelagios   .section-content ul.annotations {
-        list-style-type: none !important;
+        list-style-type: disc !important;
         list-style-image: none !important;
         padding: 2px 0 2px 2px !important;
         margin: 0 0 0 5px !important;
@@ -234,6 +235,10 @@
         padding: 10px 0 15px 20px !important;
         border-bottom: solid 1px #4F87D1 !important;
         margin: 0 10px 0 10px !important;
+    }
+    
+    .pelagios .no-search-results {
+        margin: 10px 10px 10px 10px !important;
     }
     
     .pelagios .list-results-section  {
