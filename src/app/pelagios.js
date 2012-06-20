@@ -92,7 +92,16 @@
         
         var html = Handlebars.templates['widget_container']({widgetContext: widgetContext});
         $('#'+widgetContext.widgetID).append(html);
-        $('#'+widgetContext.widgetID+'-container').draggable();     
+
+        // draggable() does not work in IE8 and it is possible that other
+        // browsers also do not support it. It's not vital so just catch
+        // any errors 
+        try {
+            $('#'+widgetContext.widgetID+'-container').draggable();
+        } catch (err) {
+            debug('ERROR: Could not make widget draggable');
+        }        
+              
         
         this.setTypePlace = function() { 
             var html = Handlebars.templates['place']({widgetContext: widgetContext});
@@ -122,10 +131,6 @@
                 });
             }
             displayPlace(widgetContext.pleiadesID);
-        }
-        
-        function addAboutSection() {
-            
         }
         
         function widgetPopUp() {
