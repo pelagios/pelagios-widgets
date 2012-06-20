@@ -17,6 +17,7 @@
          'lib/text!template/annotations.tmpl',
          'lib/text!template/search_results.tmpl',
          'lib/text!template/new_tab.tmpl',
+         'lib/text!template/about.tmpl',
          'lib/text!app/dataset.json',
          'jqueryui',
          'lib/jquery_pagination'
@@ -36,6 +37,7 @@
                   annotations_tmpl,
                   search_results_tmpl,
                   new_tab_tmpl,
+                  about_tmpl,
                   datasetJSON
                   ) {   
     var config = {
@@ -74,6 +76,7 @@
         eval(annotations_tmpl);
         eval(search_results_tmpl);
         eval(new_tab_tmpl);
+        eval(about_tmpl);
         
         var dataset = $.parseJSON(datasetJSON);
         
@@ -193,16 +196,17 @@
             placeMap = {};
             clearPlace();
             showPleiadesData(pleiadesID);
-            showAboutInformation();
+            if (widgetContext.type == 'place') {
+                showAboutInformation();
+            }
             showPelagiosData(pleiadesID);   
             showFlickrData(pleiadesID);
         }
         
         function showAboutInformation() {
             addSection('about', 'About Pelagios and this widget', widgetContext.imageDir+'partner_icons/pelagios.png', '');
-            var html ='This widget displays data from the Pelagios project partners</p>';
+            var html = Handlebars.templates['about']();
             
-            html += '<p>View the <a href="http://pelagios-project.blogspot.co.uk/">Pelagios website</a> for more information</a>';
             $('#'+widgetContext.widgetID+'-content-about').append(html);
         }
         

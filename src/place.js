@@ -74,7 +74,8 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                          iconDir:            baseURL+'images/partner_icons/',
                          scriptDir:          baseURL+'scripts/',
                          cssDir:             baseURL+'css/',
-                         pleiadesFlickrGroupOnly:  false
+                         pleiadesFlickrGroupOnly:  false,
+                         type:               'place'
                 };
 
                 if (util.includesGoogleMaps2()) {
