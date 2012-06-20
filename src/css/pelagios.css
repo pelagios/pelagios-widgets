@@ -52,6 +52,7 @@
     
     .pelagios .icon {
         cursor:  pointer !important;
+        display: inline !important;
     }
       
     .pelagios  .content-wrapper {
