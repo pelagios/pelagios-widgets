@@ -10,8 +10,8 @@ docs/styles.css
 place.js
 ----------------
 app/util.js
-lib/async.js
-lib/async!http://maps.google.com/maps/api/js?sensor=false
+app/loadGMaps.js
+app/loadGMaps!lib/async!http://maps.google.com/maps/api/js?sensor=false
 app/search_map.js
 app/place_map.js
 lib/text.js
@@ -36,8 +36,8 @@ place.js
 search.js
 ----------------
 app/util.js
-lib/async.js
-lib/async!http://maps.google.com/maps/api/js?sensor=false
+app/loadGMaps.js
+app/loadGMaps!lib/async!http://maps.google.com/maps/api/js?sensor=false
 app/search_map.js
 app/place_map.js
 lib/text.js
