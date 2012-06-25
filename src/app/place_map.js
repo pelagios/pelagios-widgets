@@ -2,7 +2,7 @@
  * Pelagios place map library
  * @license GPL v3(see LICENSE.txt)
  */
- define(['lib/async!http://maps.google.com/maps/api/js?sensor=false'], function () {
+ define(['app/loadGMaps!lib/async!http://maps.google.com/maps/api/js?sensor=false'], function () {
     function PlaceMap(id) {
         
         // check ID exists 

@@ -329,7 +329,6 @@
             * specified location
             */        
             function displayPelagiosData(json) { 
-                console.log(json);
                 // Loop through the root datasets 
                 $.each(json, function(key, rootDataset) {
                     // If there are only results in one subset then

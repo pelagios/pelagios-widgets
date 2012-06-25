@@ -2,7 +2,7 @@
  * Pelagios search map library
  * @license GPL v3(see LICENSE.txt)
  */
- define(['lib/async!http://maps.google.com/maps/api/js?sensor=false'], function () {
+ define(['app/loadGMaps!lib/async!http://maps.google.com/maps/api/js?sensor=false'], function () {
     function SearchMap(id) {
         
         // check ID exists 
