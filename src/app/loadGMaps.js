@@ -6,7 +6,7 @@ define(function(){
 
     function noGMaps2(){        
         if (_noGMaps2 != null) return _noGMaps2;
-        //check only once..
+       
         _noGMaps2 = (typeof GMap2 == 'undefined');
     }
 
@@ -16,8 +16,10 @@ define(function(){
                 //don't load during build or if browser supports canvas
                 onLoad(null);
             } else {
+                window.setTimeout(function() {
                 //load stuff if canvas isn't supported
                 req([name], onLoad);
+                }, 500);
             }
         }
     };
