@@ -328,7 +328,8 @@
             * json - the data returned by the Pelagios Graph Explorer API for the
             * specified location
             */        
-            function displayPelagiosData(json) {                
+            function displayPelagiosData(json) { 
+                console.log(json);
                 // Loop through the root datasets 
                 $.each(json, function(key, rootDataset) {
                     // If there are only results in one subset then
@@ -366,9 +367,12 @@
                             subdataset[0].widgetContext = widgetContext;
                             subdataset[0].title         = rootDataset.title;
                             subdataset[0].id            = rootDatasetID;  
-                            subdataset[0].references    =   rootDataset.annotations_referencing_place;                         
+                            subdataset[0].references    =   json[key].annotations_referencing_place;  
+                                                       
                             subdataset[0].multipleReferences = (subdataset[0].references > 1 ) ? true : false;
                         }
+                        
+                        
                         
                         // Now add the HTML for the root datasets and divs 
                         // to hang the subdataset info on
