@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>How to Embed the Pelagios Widgets</title>
+<link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+</head>
+<body>
+<ul class="nav">
+<li>
+<a href="../index.html">Home</a> </li>
+<li> <a href="../docs/index.html">Documentation</a> </li>
+<li> <a href="../demo/index.html">Demo</a></li>
+</ul>
+<h1>How to add an icon with a link to a Place Widget</h2>
+<p>May blog and content management systems do not allow you to embed scripts. 
+Here are instructions for adding a Pelagios icon with a link to a particular 
+place widget as an alternative.</p>
+<p>1) Find the Pleiades ID of the place
+</p>
+<p>
+Find the place on the Pleiades website and look at the URL of the page for the place to get the Pleiades ID of the place. e.g. if the URL is http://pleiades.stoa.org/places/579885/ or http://pleiades.stoa.org/places/579885/?searchterm=Athens* then the Pleiades ID is 579885.
+</p><p>
+2) Add the following HTML to your page where PLEIADES_ID is the Pleiades ID from the first step:
+</p>
+<pre>
+&lt;a href="http://pelagios.github.com/pelagios-widgets/demo/place/place.html?pleiadesid=PLEIADES_ID"&gt;
+&lt;img src="http://pelagios.github.com/pelagios-widgets/images/icons/pelagios.png" /&gt;&lt;/a&gt;
+</pre> 
+ 
+</html>

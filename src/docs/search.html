@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>How to Embed the Pelagios Widgets</title>
+<link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+</head>
+<body>
+<ul class="nav">
+<li>
+<a href="../index.html">Home</a> </li>
+<li> <a href="../docs/index.html">Documentation</a> </li>
+<li> <a href="../demo/index.html">Demo</a></li>
+</ul>
+<h1>How to embed the Pelagios Search Widget</h1>
+<p>
+1) Add the following javascript somewhere on your page.
+</p>
+<pre>
+&lt;script type="text/javascript" src="http://pelagios.github.com/pelagios-widgets/lib/require.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="http://pelagios.github.com/pelagios-widgets/search.js"&gt;&lt;/script&gt;
+</pre>
+
+<p>
+2) Choose a widget ID
+</p><p>
+Your widget needs an ID which can be any alphanumeric string you like, but it must not clash with the id of any other html element on your page and if you want to embed more than one widget on a page each widget must have a different ID.
+</p><p>
+3) Add the following HTML to your page
+<pre>
+</pre>
+&lt;div id="WIDGET_ID" class="pelagios pelagios-search"&gt;&lt;/div&gt;
+</p><p>
+Where you would like the widget to appear add the following HTML where PLEIADES_ID is your Pleiades ID and WIDGET_ID is your widget ID. <div id="WIDGET_ID" class="pelagios pelagios-search"></div>
+</p>
+<h2>Options</h2>
+<ul>
+<li>To not display any maps in the widget, add <code>data-display_map="false"</code> to the widget div.</li>
+</ul>
+
+</html>
