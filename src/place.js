@@ -47,6 +47,12 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                         msg += ' ' + $(this).attr('id');
                     });
                     console.log(msg);
+                    
+                    if (typeof $('.pelagios-place') == 'undefined') {
+                        console.log('No Pelagios widget HTML on page '
+                        + 'if the HTML is added via Javascript please make '
+                        +'sure it has added before the Pelagios javascript is run');
+                    }
                 }
             
                 // Find everything on the page with the right class
