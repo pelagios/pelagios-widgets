@@ -429,7 +429,6 @@
                           "&limit="+config.NUM_ANNOTATIONS_TO_DISPLAY+
                           "&offset="+newPageIndex*config.NUM_ANNOTATIONS_TO_DISPLAY+
                           "&callback=?";                               
-
                 // Need to use a closure to be able to get
                 // at the subset ID
                 var success = function(json) {
