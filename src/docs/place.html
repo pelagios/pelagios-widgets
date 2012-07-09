@@ -49,4 +49,21 @@ add <code>data-icon="false"</code> to the widget div</li>
 <li>To display the widget on mouseover of the icon, rather than on click, add <code>data-mouseover="true"</code> to the widget div.</li>
 </ul>
 
+<h2>Common problems</h2>
+
+<ul>
+<li><strong>Widget icon not appearing:</strong> This can happen when the 
+Pelagios script does not find the HTML from step 4 above on your page. This can
+happen if you add the scripts in the HTML source and then add the HTML via 
+Javascript. If this happens, add the Pelagios script via your javascript as well
+after you have added the HTML.<li>
+<li><strong>Google Maps errors</strong> These can happen if you are using 
+Google Maps v2 on your page. This conflicts with Google Maps v3 which is used 
+by the widget. To get round this, only run the Pelagios script after Google Maps
+v2 has finished loading. The Pelagios script should then detect that Google Maps
+v2 is already been used on the page and not load Google Maps v3 and not display 
+the map. If you use <a href="https://developers.google.com/loader/">Google Loader</a>, you can set a callback for when Google Maps 
+has finished loading.
+</ul>
+
 </html>
