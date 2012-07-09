@@ -10,26 +10,67 @@
             throw Error('ERROR: Invalid ID for place map');
         }
         
-        var map = new google.maps.Map(
+        try {
+            var map = new google.maps.Map(
                             document.getElementById(id), 
                             {zoom:      8, 
                              mapTypeId: google.maps.MapTypeId.TERRAIN});
+        } catch (err) {
+            console.log('ERROR: Failed to crate Google map for element id '+id+' : '+err);
+        }
         
-        var marker = new google.maps.Marker({ map: map});
+        try {
+            var marker = new google.maps.Marker({map: map});
+        } catch (err) {
+            console.log('ERROR: Failed to create Google Map marker : '+err);
+        }
 
 
         this.refresh = function() {
-            google.maps.event.trigger(map,'resize');
-            map.setCenter(marker.getPosition());
+            try {
+                google.maps.event.trigger(map,'resize');
+            } catch (err) {
+                console.log('ERROR: Failed to resize Google map :'+ err);
+            }
+            
+            try {
+                map.setCenter(marker.getPosition());
+            } catch (err) {
+                console.log('ERROR: Failed to center Google Map : '+err);
+            }
         } 
         
         this.setMarker= function(coordinates, title) {
-            var location = new google.maps.LatLng(coordinates[1], 
+            try {
+                var location = new google.maps.LatLng(coordinates[1], 
                                                   coordinates[0]);
-            marker.setPosition(location);
-            marker.setTitle(title);
-            map.setCenter(location);  
-            google.maps.event.trigger(map,'resize');
+            } catch (err) {
+                console.log('ERROR: Failed to create Google Maps location : '+err);
+            }
+            
+            try {            
+                marker.setPosition(location);
+            } catch (err) {
+                console.log('ERROR: Failed to set marker position : '+err);
+            }  
+            
+            try {
+                marker.setTitle(title);
+            } catch (err) {
+                console.log('ERROR: Failed to set marker title : '+err);
+            }  
+
+            try {
+                map.setCenter(location); 
+            } catch (err) {
+                console.log('ERROR: Failed to center Google Map : '+err);
+            }
+            
+            try {            
+                google.maps.event.trigger(map,'resize');
+            } catch (err) {
+                console.log('ERROR: Failed to resize Google Map : '+err);
+            }  
         }
     }
     

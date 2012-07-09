@@ -10,9 +10,13 @@
             throw Error('ERROR: Invalid ID for search map');
         }
         
-        var map = new google.maps.Map(
+        try {
+            var map = new google.maps.Map(
                         document.getElementById(id), 
                         {mapTypeId: google.maps.MapTypeId.TERRAIN});
+        } catch (err) {
+            console.log('ERROR: Failed to create Google Map');
+        }
         var markerBounds = new google.maps.LatLngBounds();
         var infoWindow   = new google.maps.InfoWindow(); 
 
