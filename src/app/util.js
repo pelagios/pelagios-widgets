@@ -3,7 +3,7 @@
  * @license GPL v3(see LICENSE.txt)
  */
 
- define(function () {  
+ define(['jquery'], function ($) {  
  
     /**
     * Converts a string into a string which can be used as an HTML id

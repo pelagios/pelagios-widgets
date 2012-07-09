@@ -32,14 +32,14 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                 deps: ['jquery']
              }
         }        
-    })
+    });
 
-    require(    
-        ['app/pelagios',
-         'app/util',
-         'lib/handlebars'], 
+    require(['app/pelagios', 'app/util', 'lib/handlebars'], 
         function(pelagios, util) {
-            $(document).ready(function($) {
+            var jQuery = window.jQuery.noConflict(true);
+            
+            jQuery(document).ready(function($) {
+                console.log($);
                 var debug = true;
                 if (debug) {
                     var msg = 'FINDING PLACE WIDGETS ON PAGE: ';
@@ -54,52 +54,54 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                         +'sure it has added before the Pelagios javascript is run.');
                     }
                 }
-            
-                // Find everything on the page with the right class
-                // Get its widget ID and create the widget
-                // Make sure this script is only run once
-                $('.pelagios-place').each(function() {
-                    var widgetContext = {
-                         baseURL:            baseURL, 
-                         widgetID:           $(this).attr('id'), 
-                         pleiadesID:         $(this).attr('data-pleiades_id'), 
-                         displayMap:         $(this).attr('data-display_map') ? 
-                                             !($(this).attr('data-display_map') === 'false'):
-                                             true,
-                         onMouseOver:         $(this).attr('data-mouseover') ? 
-                                             ($(this).attr('data-mouseover') === 'true'):
-                                             false,
-                         debug:              $(this).attr('data-debug') ? 
-                                             ($(this).attr('data-debug') === 'true') :true,
-                         icon:               $(this).attr('data-icon') ? 
-                                             ($(this).attr('data-icon') === 'true') :true,
-                         newTab:             $(this).attr('data-new_tab') ? 
-                                             ($(this).attr('data-new_tab') === 'true'):false,
-                         templateDir:        baseURL+'template/',
-                         imageDir:           baseURL+'images/',
-                         iconDir:            baseURL+'images/partner_icons/',
-                         scriptDir:          baseURL+'scripts/',
-                         cssDir:             baseURL+'css/',
-                         pleiadesFlickrGroupOnly:  false,
-                         type:               'place'
-                };
-
-                if (util.includesGoogleMaps2()) {
-                    widgetContext.displayMap = false;
-                }
-                if (widgetContext.debug) {
-                    console.log('CREATING WIDGET pleiadesID:'+
-                                widgetContext.pleiadesID+' widgetID:'+
-                                widgetContext.widgetID+' baseURL:'
-                                +widgetContext.baseURL);
-                }
                 
-                widget = new pelagios.Widget(widgetContext);
-                widget.setTypePlace();
-                });
+                if ($('.pelagios-place').length > 0) {
+                    // Find everything on the page with the right class
+                    // Get its widget ID and create the widget
+                    // Make sure this script is only run once
+                    $('.pelagios-place').each(function() {
+                        var widgetContext = {
+                             baseURL:            baseURL, 
+                             widgetID:           $(this).attr('id'), 
+                             pleiadesID:         $(this).attr('data-pleiades_id'), 
+                             displayMap:         $(this).attr('data-display_map') ? 
+                                                 !($(this).attr('data-display_map') === 'false'):
+                                                 true,
+                             onMouseOver:         $(this).attr('data-mouseover') ? 
+                                                 ($(this).attr('data-mouseover') === 'true'):
+                                                 false,
+                             debug:              $(this).attr('data-debug') ? 
+                                                 ($(this).attr('data-debug') === 'true') :true,
+                             icon:               $(this).attr('data-icon') ? 
+                                                 ($(this).attr('data-icon') === 'true') :true,
+                             newTab:             $(this).attr('data-new_tab') ? 
+                                                 ($(this).attr('data-new_tab') === 'true'):false,
+                             templateDir:        baseURL+'template/',
+                             imageDir:           baseURL+'images/',
+                             iconDir:            baseURL+'images/partner_icons/',
+                             scriptDir:          baseURL+'scripts/',
+                             cssDir:             baseURL+'css/',
+                             pleiadesFlickrGroupOnly:  false,
+                             type:               'place'
+                        };
+
+                        if (util.includesGoogleMaps2()) {
+                            widgetContext.displayMap = false;
+                        }
+                        
+                        if (widgetContext.debug) {
+                            console.log('CREATING WIDGET pleiadesID:'+
+                                        widgetContext.pleiadesID+' widgetID:'+
+                                        widgetContext.widgetID+' baseURL:'
+                                        +widgetContext.baseURL);
+                        }
+                        
+                        widget = new pelagios.Widget(widgetContext);
+                        widget.setTypePlace();
+                    });
+                }
+
             });
-        }
-    );
+        });
     })();
 }
-

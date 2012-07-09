@@ -38,7 +38,8 @@ if (!PELAGIOS_SEARCH_MAIN_JS_RUN) { // Only run this script once per page
          'app/util',
          'lib/handlebars'], 
         function(pelagios, util) {
-            $(document).ready(function($) {
+            var jQuery = window.jQuery.noConflict(true);
+            jQuery(document).ready(function($) {
                 // Find everything on the page with the right class
                 // Get its widget ID and create the widget
                 // Make sure this script is only run once
