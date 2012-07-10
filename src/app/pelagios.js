@@ -412,7 +412,9 @@
                   subdataset.id).pagination(
                   subdataset.references,
                   {items_per_page: config.NUM_ANNOTATIONS_TO_DISPLAY, 
-                   callback:       callback
+                   callback:       callback,
+                   next_show_always: false,
+                   prev_show_always: false
                   }); 
 
                 
