@@ -253,9 +253,18 @@
     }
     
     .pelagios .list-results  ul {
-        font-size: 090%;
+        font-size: 90%;
         margin-left: 1em;
         padding-left: 1em;
+        list-style-type: none;
+        line-height: 2.2em;
+    }
+    
+    .pelagios .list-results li {
+
+        background-repeat: no-repeat;
+        background-position: 0px 0px 0px 0px; 
+        padding: 0 0 0 40px;   
     }
 
 }

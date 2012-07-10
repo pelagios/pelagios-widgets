@@ -513,6 +513,9 @@
                     place.label = val.label;
                     place.pleiadesID = val.uri.replace(/.*places.*F/g, '');
                     place.geojson = val;
+                    if (val.feature_type) {
+                    place.feature_type = val.feature_type.replace(/.*place-types\//g, '');
+                    } 
                     place.content = '<h2>'+place.label+'</h2>';
                     place.content += '<p id="'+widgetContext.widgetID+'-info-'+
                                      place.pleiadesID+'">View info</p>';
@@ -524,6 +527,27 @@
                 // Display the search results
                 var html = Handlebars.templates['search_results'](data);
                 $('#'+widgetContext.widgetID+'-search-results').append(html);
+                
+                // Add the icons background-image
+                $('.pelagios .list-results li').css('background-image', 
+                'url('+widgetContext.imageDir+'place_type_icons/unknown.png)');
+                var place_type_icons = {'temple':'temple.png', 
+                                        'santuary':'sanctuary.png',
+                                        'river': 'river.png',
+                                        'water-open' : 'river.png',
+                                        'mountain' : 'mountain.png',
+                                        'island' : 'island.png',
+                                        'tribe' : 'tribe.png',
+                                        'settlement' : 'settlement.png',
+                                        'urban' : 'settlement.png',
+                                        'people' : 'people.png'
+                                        };
+                $.each(place_type_icons, function(place, image) {
+                    $('.pelagios .list-results li.'+place).css('background-image', 
+                         'url('+widgetContext.imageDir+'place_type_icons/'+image+')');
+                });
+
+                
                 if (widgetContext.displayMap) {            
                     searchMap = new search_map.SearchMap(widgetContext.widgetID +
                                     "-search-map_canvas");  
