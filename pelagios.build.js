@@ -9,8 +9,12 @@
     
     paths: {
         "jquery": "empty:",
-        "jqueryui": "empty:"
+        "jqueryui": "empty:",
+        requireLib: 'lib/require'
     },
+    
+    namespace: "pelagios",
+    
             shim: {
             'jqueryui': {
                 deps: ['jquery'],
@@ -20,6 +24,11 @@
              }
         },  
     modules: [
+        {
+            name: "pelagios",
+            include: ["requireLib", "place", "search"],
+            create: true
+        },
         {
             name: "place",
             exclude: ["jquery", "jqueryui"]
