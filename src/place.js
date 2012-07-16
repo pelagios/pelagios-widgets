@@ -33,13 +33,12 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
              }
         }        
     });
-
+    
     require(['app/pelagios', 'app/util', 'lib/handlebars'], 
         function(pelagios, util) {
             var jQuery = window.jQuery.noConflict(true);
             
             jQuery(document).ready(function($) {
-                console.log($);
                 var debug = true;
                 if (debug) {
                     var msg = 'FINDING PLACE WIDGETS ON PAGE: ';

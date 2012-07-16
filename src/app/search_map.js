@@ -15,8 +15,10 @@
                         document.getElementById(id), 
                         {mapTypeId: google.maps.MapTypeId.TERRAIN});
         } catch (err) {
-            console.log('ERROR: Failed to create Google Map');
+            console.log('ERROR: Failed to create Google Map for element id '
+                        +id + : '+err);
         }
+        
         var markerBounds = new google.maps.LatLngBounds();
         var infoWindow   = new google.maps.InfoWindow(); 
 
