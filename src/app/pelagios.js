@@ -39,7 +39,9 @@
                   new_tab_tmpl,
                   about_tmpl,
                   datasetJSON
-                  ) {   
+                  ) {
+                  
+                
     var config = {
         URL_PELAGIOS_API_V2:         'http://pelagios.dme.ait.ac.at/api/',
         API_KEY_FLICKR:              'ddf82df2aba035bfcf14c12a4eff3335',
@@ -55,8 +57,9 @@
         MSG_TITLE_PLEIADES_TIMEOUT:  'Error: Pleiades not responding',
         NUM_ANNOTATIONS_TO_DISPLAY:  20
     }
-    
+
     function Widget(widgetContext) {
+          //var $ = window.jQuery.noConflict(true);
         var placeMap = {};
         var searchMap = {};
         var searchString = "";
@@ -77,7 +80,8 @@
         eval(search_results_tmpl);
         eval(new_tab_tmpl);
         eval(about_tmpl);
-        
+        console.log('pelagios.js');
+        console.log($);
         var dataset = $.parseJSON(datasetJSON);
         
         if (typeof($('#'+widgetContext.widgetID)) == undefined) {

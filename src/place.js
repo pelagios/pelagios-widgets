@@ -14,7 +14,6 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
     var scripts = document.getElementsByTagName('script');
     var src = scripts[scripts.length - 1].src;
     var baseURL = src.replace(/place.js/g, '');
-
     require.config({
         paths: {
             jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min',
@@ -33,7 +32,7 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
              }
         }        
     });
-    
+
     require(['app/pelagios', 'app/util', 'lib/handlebars'], 
         function(pelagios, util) {
             var jQuery = window.jQuery.noConflict(true);

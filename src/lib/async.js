@@ -4,6 +4,7 @@
 * Version: 0.1.1 (2011/11/17)
 * Released under the MIT license
 */
+
 define(function(){
 
     var DEFAULT_PARAM_NAME = 'callback',

@@ -1,7 +1,7 @@
 ({
     appDir: "src",
     baseUrl: ".",
-    dir: "build",
+    dir: "build",  
     
     optimizeCss: "standard",
     inlineText: true,   
@@ -10,32 +10,30 @@
     paths: {
         "jquery": "empty:",
         "jqueryui": "empty:",
-        requireLib: 'lib/require'
+        "requireLib": "lib/require"
     },
     
-    namespace: "pelagios",
+    shim: {
+        'jqueryui': {
+            deps: ['jquery'],
+        },
+        'lib/jquery_pagination' : {
+            deps: ['jquery']
+        }
+    },  
     
-            shim: {
-            'jqueryui': {
-                deps: ['jquery'],
-             },
-             'lib/jquery_pagination' : {
-                deps: ['jquery']
-             }
-        },  
     modules: [
         {
-            name: "pelagios",
-            include: ["requireLib", "place", "search"],
+            name: "place",
+            include: ["place", "requireLib"],
+            exclude: ["jquery", "jqueryui"],
             create: true
         },
         {
-            name: "place",
-            exclude: ["jquery", "jqueryui"]
-        },
-        {
             name: "search",
-            exclude: ["jquery", "jqueryui"]
+            include: ["search", "requireLib"],
+            exclude: ["jquery", "jqueryui"],
+            create: true
         }
     ]
 })

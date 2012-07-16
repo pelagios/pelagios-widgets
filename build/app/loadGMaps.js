@@ -1,1 +1,1 @@
-pelagios.define([],function(){function noGMaps2(){if(_noGMaps2!=null)return _noGMaps2;_noGMaps2=typeof GMap2=="undefined"}var _noGMaps2;return{load:function(name,req,onLoad,config){config.isBuild||noGMaps2()?onLoad(null):window.setTimeout(function(){req([name],onLoad)},500)}}})
+define([],function(){function t(){if(e!=null)return e;e=typeof GMap2=="undefined"}var e;return{load:function(e,n,r,i){i.isBuild||t()?r(null):window.setTimeout(function(){n([e],r)},500)}}})

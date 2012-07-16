@@ -1,5 +1,5 @@
 /**
- * @license r.js 2.0.1+ Tue, 12 Jun 2012 06:10:01 GMT Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
+ * @license r.js 2.0.4 Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/requirejs for details
  */
@@ -14,7 +14,7 @@
 console: false, java: false, module: false, requirejsVars */
 var requirejs, require, define;
 (function (console, args, readFileFunc) {
-  var fileName, env, fs, vm, path, exec, rhinoContext, dir, nodeRequire, nodeDefine, exists, reqMain, loadedOptimizedLib, existsForNode, version = '2.0.1+ Tue, 12 Jun 2012 06:10:01 GMT',
+  var fileName, env, fs, vm, path, exec, rhinoContext, dir, nodeRequire, nodeDefine, exists, reqMain, loadedOptimizedLib, existsForNode, version = '2.0.4',
     jsSuffixRegExp = /\.js$/,
     commandOption = '',
     useLibLoaded = {},
@@ -81,7 +81,7 @@ var requirejs, require, define;
     }
   }
   /** vim: et:ts=4:sw=4:sts=4
-   * @license RequireJS 2.0.1+ Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
+   * @license RequireJS 2.0.4 Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
    * Available via the MIT or new BSD license.
    * see: http://github.com/jrburke/requirejs for details
    */
@@ -89,9 +89,9 @@ var requirejs, require, define;
   /*global window, navigator, document, importScripts, jQuery, setTimeout, opera */
   (function (global) {
     'use strict';
-    var version = '2.0.1+',
+    var version = '2.0.4',
       commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-      cjsRequireRegExp = /require\s*\(\s*["']([^'"\s]+)["']\s*\)/g,
+      cjsRequireRegExp = /[^.]\s*require\s*\(\s*["']([^'"\s]+)["']\s*\)/g,
       jsSuffixRegExp = /\.js$/,
       currDirRegExp = /^\.\//,
       ostring = Object.prototype.toString,
@@ -362,6 +362,7 @@ var requirejs, require, define;
 
       function normalize(name, baseName, applyMap) {
         var baseParts = baseName && baseName.split('/'),
+          normalizedBaseParts = baseParts,
           map = config.map,
           starMap = map && map['*'],
           pkgName, pkgConfig, mapValue, nameParts, i, j, nameSegment, foundMap;
@@ -374,16 +375,16 @@ var requirejs, require, define;
             if (config.pkgs[baseName]) {
               //If the baseName is a package name, then just treat it as one
               //name to concat the name with.
-              baseParts = [baseName];
+              normalizedBaseParts = baseParts = [baseName];
             } else {
               //Convert baseName to array, and lop off the last part,
               //so that . matches that 'directory' and not name of the baseName's
               //module. For instance, baseName of 'one/two/three', maps to
               //'one/two/three.js', but we want the directory, 'one/two' for
               //this normalization.
-              baseParts = baseParts.slice(0, baseParts.length - 1);
+              normalizedBaseParts = baseParts.slice(0, baseParts.length - 1);
             }
-            name = baseParts.concat(name.split('/'));
+            name = normalizedBaseParts.concat(name.split('/'));
             trimDots(name);
             //Some use of packages may use a . path to reference the
             //'main' module name, so normalize for that.
@@ -508,16 +509,7 @@ var requirejs, require, define;
           } else {
             //A regular module.
             normalizedName = normalize(name, parentName, applyMap);
-            //Calculate url for the module, if it has a name.
-            //Use name here since nameToUrl also calls normalize,
-            //and for relative names that are outside the baseUrl
-            //this causes havoc. Was thinking of just removing
-            //parentModuleMap to avoid extra normalization, but
-            //normalize() still does a dot removal because of
-            //issue #142, so just pass in name here and redo
-            //the normalization. Paths outside baseUrl are just
-            //messy to support.
-            url = context.nameToUrl(name, null, parentModuleMap);
+            url = context.nameToUrl(normalizedName);
           }
         }
         //If the id is a plugin id that cannot be determined if it needs
@@ -856,6 +848,7 @@ var requirejs, require, define;
           //doing a direct modification of the depMaps array
           //would affect that config.
           this.depMaps = depMaps && depMaps.slice(0);
+          this.depMaps.rjsSkipMap = depMaps.rjsSkipMap;
           this.errback = errback;
           //Indicate this module has be initialized
           this.inited = true;
@@ -1026,7 +1019,7 @@ var requirejs, require, define;
                   return normalize(name, parentName, true);
                 }) || '';
               }
-              normalizedMap = makeModuleMap(map.prefix + '!' + name);
+              normalizedMap = makeModuleMap(map.prefix + '!' + name, this.map.parentMap, false, true);
               on(normalizedMap, 'defined', bind(this, function (value) {
                 this.init([], function () {
                   return value;
@@ -1089,6 +1082,7 @@ var requirejs, require, define;
             //could be some weird string with no path that actually wants to
             //reference the parentName's path.
             plugin.load(map.name, makeRequire(map.parentMap, true, function (deps, cb) {
+              deps.rjsSkipMap = true;
               return context.require(deps, cb);
             }), load, config);
           }));
@@ -1113,7 +1107,7 @@ var requirejs, require, define;
             if (typeof depMap === 'string') {
               //Dependency needs to be converted to a depMap
               //and wired up to this module.
-              depMap = makeModuleMap(depMap, (this.map.isDefine ? this.map : this.map.parentMap), false, true);
+              depMap = makeModuleMap(depMap, (this.map.isDefine ? this.map : this.map.parentMap), false, !this.depMaps.rjsSkipMap);
               this.depMaps[i] = depMap;
               handler = handlers[depMap.id];
               if (handler) {
@@ -1460,16 +1454,17 @@ var requirejs, require, define;
             ext = moduleNamePlusExt.substring(index, moduleNamePlusExt.length);
             moduleNamePlusExt = moduleNamePlusExt.substring(0, index);
           }
-          return context.nameToUrl(moduleNamePlusExt, ext, relModuleMap);
+          return context.nameToUrl(normalize(moduleNamePlusExt, relModuleMap && relModuleMap.id, true), ext);
         },
         /**
          * Converts a module name to a file path. Supports cases where
          * moduleName may actually be just an URL.
+         * Note that it **does not** call normalize on the moduleName,
+         * it is assumed to have already been normalized. This is an
+         * internal API, not a public one. Use toUrl for the public API.
          */
-        nameToUrl: function (moduleName, ext, relModuleMap) {
+        nameToUrl: function (moduleName, ext) {
           var paths, pkgs, pkg, pkgPath, syms, i, parentModule, url, parentPath;
-          //Normalize module name if have a base relative module name to work from.
-          moduleName = normalize(moduleName, relModuleMap && relModuleMap.id, true);
           //If a colon is in the URL, it indicates a protocol is used and it is just
           //an URL to a file, or if it starts with a slash, contains a query arg (i.e. ?)
           //or ends with .js, then assume the user meant to use an url and not a module id.
@@ -1666,6 +1661,7 @@ var requirejs, require, define;
         node = config.xhtml ? document.createElementNS('http://www.w3.org/1999/xhtml', 'html:script') : document.createElement('script');
         node.type = config.scriptType || 'text/javascript';
         node.charset = 'utf-8';
+        node.async = true;
         node.setAttribute('data-requirecontext', context.contextName);
         node.setAttribute('data-requiremodule', moduleName);
         //Set up load listener. Test attachEvent first because IE9 has
@@ -1758,18 +1754,19 @@ var requirejs, require, define;
         //baseUrl, if it is not already set.
         dataMain = script.getAttribute('data-main');
         if (dataMain) {
-          //Pull off the directory of data-main for use as the
-          //baseUrl.
-          src = dataMain.split('/');
-          mainScript = src.pop();
-          subPath = src.length ? src.join('/') + '/' : './';
           //Set final baseUrl if there is not already an explicit one.
           if (!cfg.baseUrl) {
+            //Pull off the directory of data-main for use as the
+            //baseUrl.
+            src = dataMain.split('/');
+            mainScript = src.pop();
+            subPath = src.length ? src.join('/') + '/' : './';
             cfg.baseUrl = subPath;
+            dataMain = mainScript;
           }
           //Strip off any trailing .js since dataMain is now
           //like a module name.
-          dataMain = mainScript.replace(jsSuffixRegExp, '');
+          dataMain = dataMain.replace(jsSuffixRegExp, '');
           //Put the data-main script in the files to load.
           cfg.deps = cfg.deps ? cfg.deps.concat(dataMain) : [dataMain];
           return true;
@@ -2322,6 +2319,27 @@ var requirejs, require, define;
                 fs.unlinkSync(fileName);
               }
             }
+          },
+          /**
+           * Deletes any empty directories under the given directory.
+           */
+          deleteEmptyDirs: function (startDir) {
+            var dirFileArray, i, fileName, filePath, stat;
+            if (file.exists(startDir)) {
+              dirFileArray = fs.readdirSync(startDir);
+              for (i = 0; i < dirFileArray.length; i++) {
+                fileName = dirFileArray[i];
+                filePath = path.join(startDir, fileName);
+                stat = fs.statSync(filePath);
+                if (stat.isDirectory()) {
+                  file.deleteEmptyDirs(filePath);
+                }
+              }
+              //If directory is now empty, remove it.
+              if (fs.readdirSync(startDir).length === 0) {
+                file.deleteFile(startDir);
+              }
+            }
           }
         };
         return file;
@@ -2334,7 +2352,7 @@ var requirejs, require, define;
        * see: http://github.com/jrburke/requirejs for details
        */
       //Helper functions to deal with file I/O.
-      /*jslint plusplus: false, strict: false */
+      /*jslint plusplus: false, strict: true */
       /*global java: false, define: false */
       define('rhino/file', function () {
         var file = {
@@ -2536,6 +2554,31 @@ var requirejs, require, define;
                 }
               }
               fileObj["delete"]();
+            }
+          },
+          /**
+           * Deletes any empty directories under the given directory.
+           * The startDirIsJavaObject is private to this implementation's
+           * recursion needs.
+           */
+          deleteEmptyDirs: function (startDir, startDirIsJavaObject) {
+            var topDir = startDir,
+              dirFileArray, i, fileObj;
+            if (!startDirIsJavaObject) {
+              topDir = new java.io.File(startDir);
+            }
+            if (topDir.exists()) {
+              dirFileArray = topDir.listFiles();
+              for (i = 0; i < dirFileArray.length; i++) {
+                fileObj = dirFileArray[i];
+                if (fileObj.isDirectory()) {
+                  file.deleteEmptyDirs(fileObj, true);
+                }
+              }
+              //If the directory is empty now, delete it.
+              if (topDir.listFiles().length === 0) {
+                file.deleteFile(String(topDir.getPath()));
+              }
             }
           }
         };
@@ -6969,7 +7012,7 @@ parseStatement: true, parseSourceElement: true */
           disclaimer in the documentation and/or other materials
           provided with the distribution.
 
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER “AS IS” AND ANY
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER â€œAS ISâ€ AND ANY
     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
     IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
     PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE
@@ -8073,6 +8116,8 @@ parseStatement: true, parseSourceElement: true */
       exports.ATOMIC_START_TOKEN = ATOMIC_START_TOKEN;
       exports.OPERATORS = OPERATORS;
       exports.is_alphanumeric_char = is_alphanumeric_char;
+      exports.is_identifier_start = is_identifier_start;
+      exports.is_identifier_char = is_identifier_char;
       exports.set_logger = function (logger) {
         warn = logger;
       };
@@ -8202,7 +8247,7 @@ parseStatement: true, parseSourceElement: true */
           disclaimer in the documentation and/or other materials
           provided with the distribution.
 
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER “AS IS” AND ANY
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER â€œAS ISâ€ AND ANY
     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
     IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
     PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE
@@ -8219,6 +8264,7 @@ parseStatement: true, parseSourceElement: true */
       var jsp = require("./parse-js"),
         slice = jsp.slice,
         member = jsp.member,
+        is_identifier_char = jsp.is_identifier_char,
         PRECEDENCE = jsp.PRECEDENCE,
         OPERATORS = jsp.OPERATORS; /* -----[ helper for AST traversal ]----- */
 
@@ -8630,7 +8676,13 @@ parseStatement: true, parseSourceElement: true */
         var w = ast_walker(),
           walk = w.walk,
           scope;
-        options = options || {};
+        options = defaults(options, {
+          mangle: true,
+          toplevel: false,
+          defines: null,
+          except: null,
+          no_functions: false
+        });
 
         function get_mangled(name, newMangle) {
           if (!options.mangle) return name;
@@ -8654,7 +8706,7 @@ parseStatement: true, parseSourceElement: true */
         };
 
         function _lambda(name, args, body) {
-          if (!options.no_functions) {
+          if (!options.no_functions && options.mangle) {
             var is_defun = this[0] == "defun",
               extra;
             if (name) {
@@ -9343,6 +9395,7 @@ parseStatement: true, parseSourceElement: true */
           c = walk(c);
           t = walk(t);
           e = walk(e);
+          if (empty(e) && empty(t)) return ["stat", c];
           if (empty(t)) {
             c = negate(c);
             t = e;
@@ -9363,7 +9416,6 @@ parseStatement: true, parseSourceElement: true */
               }
             })();
           }
-          if (empty(e) && empty(t)) return ["stat", c];
           var ret = ["if", c, t, e];
           if (t[0] == "if" && empty(t[3]) && empty(e)) {
             ret = best_of(ret, walk(["if", ["binary", "&&", c, t[1]], t[2]]));
@@ -9491,6 +9543,10 @@ parseStatement: true, parseSourceElement: true */
               return expr[1];
             }
             return [this[0], expr, MAP(args, walk)];
+          },
+          "num": function (num) {
+            if (!isFinite(num)) return ["binary", "/", num === 1 / 0 ? ["num", 1] : num === -1 / 0 ? ["unary-prefix", "-", ["num", 1]] : ["num", 0], ["num", 0]];
+            return [this[0], num];
           }
         }, function () {
           for (var i = 0; i < 2; ++i) {
@@ -9589,13 +9645,22 @@ parseStatement: true, parseSourceElement: true */
           }
         };
 
+        function last_char(str) {
+          str = str.toString();
+          return str.charAt(str.length - 1);
+        };
+
+        function first_char(str) {
+          return str.toString().charAt(0);
+        };
+
         function add_spaces(a) {
           if (beautify) return a.join(" ");
           var b = [];
           for (var i = 0; i < a.length; ++i) {
             var next = a[i + 1];
             b.push(a[i]);
-            if (next && ((/[a-z0-9_\x24]$/i.test(a[i].toString()) && /^[a-z0-9_\x24]/i.test(next.toString())) || (/[\+\-]$/.test(a[i].toString()) && /^[\+\-]/.test(next.toString())))) {
+            if (next && ((is_identifier_char(last_char(a[i])) && (is_identifier_char(first_char(next)) || first_char(next) == "\\")) || (/[\+\-]$/.test(a[i].toString()) && /^[\+\-]/.test(next.toString())))) {
               b.push(" ");
             }
           }
@@ -9655,7 +9720,7 @@ parseStatement: true, parseSourceElement: true */
 
         function make_num(num) {
           var str = num.toString(10),
-            a = [str.replace(/^0\./, ".")],
+            a = [str.replace(/^0\./, ".").replace('e+', 'e')],
             m;
           if (Math.floor(num) === num) {
             if (num >= 0) {
@@ -10917,10 +10982,12 @@ parseStatement: true, parseSourceElement: true */
      * see: http://github.com/jrburke/requirejs for details
      */
     /*jslint */
-    define('transform', ['./esprima', './parse', 'logger'], function (esprima, parse, logger) {
+    define('transform', ['./esprima', './parse', 'logger', 'lang'], function (esprima, parse, logger, lang) {
       'use strict';
-      return {
-        toTransport: function (namespace, moduleName, path, contents, onFound) {
+      var transform;
+      return (transform = {
+        toTransport: function (namespace, moduleName, path, contents, onFound, options) {
+          options = options || {};
           var defineRanges = [],
             contentInsertion = '',
             depString = '',
@@ -10937,7 +11004,7 @@ parseStatement: true, parseSourceElement: true */
           //Find the define calls and their position in the files.
           tokens.forEach(function (token, i) {
             var namespaceExists = false,
-              prev, prev2, next, next2, next3, next4, needsId, depAction, nameCommaRange, foundId;
+              prev, prev2, next, next2, next3, next4, needsId, depAction, nameCommaRange, foundId, sourceUrlData;
             if (token.type === 'Identifier' && token.value === 'define') {
               //Possible match. Do not want something.define calls
               //though, and only defines follow by a paren
@@ -11054,7 +11121,8 @@ parseStatement: true, parseSourceElement: true */
                 namespaceExists: namespaceExists,
                 defineRange: token.range,
                 parenRange: next.range,
-                nameCommaRange: nameCommaRange
+                nameCommaRange: nameCommaRange,
+                sourceUrlData: sourceUrlData
               });
             }
           });
@@ -11105,9 +11173,12 @@ parseStatement: true, parseSourceElement: true */
           if (onFound) {
             onFound(info);
           }
+          if (options.useSourceUrl) {
+            contents = 'eval("' + lang.jsEscape(contents) + '\\n//@ sourceURL=' + (path.indexOf('/') === 0 ? '' : '/') + path + '");\n';
+          }
           return contents;
         }
-      };
+      });
     });
     /**
      * @license Copyright (c) 2010-2011, The Dojo Foundation All Rights Reserved.
@@ -11719,7 +11790,7 @@ parseStatement: true, parseSourceElement: true */
     /*global require, define: true */
     //NOT asking for require as a dependency since the goal is to modify the
     //global require below
-    define('requirePatch', ['env!env/file', 'pragma', 'parse', 'lang', 'logger'], function (file, pragma, parse, lang, logger) {
+    define('requirePatch', ['env!env/file', 'pragma', 'parse', 'lang', 'logger', 'commonJs'], function (file, pragma, parse, lang, logger, commonJs) {
       var allowRun = true;
       //This method should be called when the patches to require should take hold.
       return function () {
@@ -11729,7 +11800,11 @@ parseStatement: true, parseSourceElement: true */
         allowRun = false;
         var layer, pluginBuilderRegExp = /(["']?)pluginBuilder(["']?)\s*[=\:]\s*["']([^'"\s]+)["']/,
           oldNewContext = require.s.newContext,
-          oldDef;
+          oldDef,
+          //create local undefined values for module and exports,
+          //so that when files are evaled in this function they do not
+          //see the node values used for r.js
+          exports, module;
         //Stored cached file contents for reuse in other layers.
         require._cachedFileContents = {};
         /**
@@ -11839,6 +11914,9 @@ parseStatement: true, parseSourceElement: true */
                     //Load the file contents, process for conditionals, then
                     //evaluate it.
                     contents = file.readFile(url);
+                    if (context.config.cjsTranslate) {
+                      contents = commonJs.convert(url, contents);
+                    }
                     //If there is a read filter, run it now.
                     if (context.config.onBuildRead) {
                       contents = context.config.onBuildRead(moduleName, url, contents);
@@ -12043,16 +12121,11 @@ parseStatement: true, parseSourceElement: true */
      * Available via the MIT or new BSD license.
      * see: http://github.com/jrburke/requirejs for details
      */
-    /*jslint plusplus: false, regexp: false, strict: false */
+    /*jslint */
     /*global define: false, console: false */
-    define('commonJs', ['env!env/file', 'uglifyjs/index'], function (file, uglify) {
+    define('commonJs', ['env!env/file', 'parse'], function (file, parse) {
+      'use strict';
       var commonJs = {
-        depRegExp: /require\s*\(\s*["']([\w-_\.\/]+)["']\s*\)/g,
-        //Set this to false in non-rhino environments. If rhino, then it uses
-        //rhino's decompiler to remove comments before looking for require() calls,
-        //otherwise, it will use a crude regexp approach to remove comments. The
-        //rhino way is more robust, but he regexp is more portable across environments.
-        useRhino: true,
         //Set to false if you do not want this file to log. Useful in environments
         //like node where you want the work to happen without noise.
         useLog: true,
@@ -12081,8 +12154,8 @@ parseStatement: true, parseSourceElement: true */
               }
             }
           } else {
-            for (i = 0;
-            (fileName = fileList[i]); i++) {
+            for (i = 0; i < fileList.length; i++) {
+              fileName = fileList[i];
               convertedFileName = fileName.replace(commonJsPath, savePath);
               //Handle JS files.
               if (jsFileRegExp.test(fileName)) {
@@ -12097,70 +12170,30 @@ parseStatement: true, parseSourceElement: true */
           }
         },
         /**
-         * Removes the comments from a string.
-         *
-         * @param {String} fileContents
-         * @param {String} fileName mostly used for informative reasons if an error.
-         *
-         * @returns {String} a string of JS with comments removed.
-         */
-        removeComments: function (fileContents, fileName) {
-          //Uglify's ast generation removes comments, so just convert to ast,
-          //then back to source code to get rid of comments.
-          return uglify.uglify.gen_code(uglify.parser.parse(fileContents), true);
-        },
-        /**
-         * Regexp for testing if there is already a require.def call in the file,
-         * in which case do not try to convert it.
-         */
-        defRegExp: /define\s*\(\s*("|'|\[|function)/,
-        /**
-         * Regexp for testing if there is a require([]) or require(function(){})
-         * call, indicating the file is already in requirejs syntax.
-         */
-        rjsRegExp: /require\s*\(\s*(\[|function)/,
-        /**
          * Does the actual file conversion.
          *
          * @param {String} fileName the name of the file.
          *
          * @param {String} fileContents the contents of a file :)
          *
-         * @param {Boolean} skipDeps if true, require("") dependencies
-         * will not be searched, but the contents will just be wrapped in the
-         * standard require, exports, module dependencies. Only usable in sync
-         * environments like Node where the require("") calls can be resolved on
-         * the fly.
-         *
          * @returns {String} the converted contents
          */
-        convert: function (fileName, fileContents, skipDeps) {
+        convert: function (fileName, fileContents) {
           //Strip out comments.
           try {
-            var deps = [],
-              depName, match,
-              //Remove comments
-              tempContents = commonJs.removeComments(fileContents, fileName);
+            var preamble = '',
+              commonJsProps = parse.usesCommonJs(fileName, fileContents);
             //First see if the module is not already RequireJS-formatted.
-            if (commonJs.defRegExp.test(tempContents) || commonJs.rjsRegExp.test(tempContents)) {
+            if (parse.usesAmdOrRequireJs(fileName, fileContents) || !commonJsProps) {
               return fileContents;
             }
-            //Reset the regexp to start at beginning of file. Do this
-            //since the regexp is reused across files.
-            commonJs.depRegExp.lastIndex = 0;
-            if (!skipDeps) {
-              //Find dependencies in the code that was not in comments.
-              while ((match = commonJs.depRegExp.exec(tempContents))) {
-                depName = match[1];
-                if (depName) {
-                  deps.push('"' + depName + '"');
-                }
-              }
+            if (commonJsProps.dirname || commonJsProps.filename) {
+              preamble = 'var __filename = module.uri || "", ' + '__dirname = __filename.substring(0, __filename.lastIndexOf("/") + 1);\n';
             }
             //Construct the wrapper boilerplate.
-            fileContents = 'define(["require", "exports", "module"' + (deps.length ? ', ' + deps.join(",") : '') + '], ' + 'function(require, exports, module) {\n' + fileContents + '\n});\n';
+            fileContents = 'define(function (require, exports, module) {\n' + preamble + fileContents + '\n});\n';
           } catch (e) {
-            console.log("COULD NOT CONVERT: " + fileName + ", so skipping it. Error was: " + e);
+            console.log("commonJs.convert: COULD NOT CONVERT: " + fileName + ", so skipping it. Error was: " + e);
             return fileContents;
           }
           return fileContents;
@@ -12175,7 +12208,7 @@ parseStatement: true, parseSourceElement: true */
      */
     /*jslint plusplus: true, nomen: true, regexp: true  */
     /*global define, require */
-    define('build', ['lang', 'logger', 'env!env/file', 'parse', 'optimize', 'pragma', 'transform', 'env!env/load', 'requirePatch', 'env!env/quit'], function (lang, logger, file, parse, optimize, pragma, transform, load, requirePatch, quit) {
+    define('build', ['lang', 'logger', 'env!env/file', 'parse', 'optimize', 'pragma', 'transform', 'env!env/load', 'requirePatch', 'env!env/quit', 'commonJs'], function (lang, logger, file, parse, optimize, pragma, transform, load, requirePatch, quit, commonJs) {
       'use strict';
       var build, buildBaseConfig, endsWithSemiColonRegExp = /;\s*$/;
       buildBaseConfig = {
@@ -12519,6 +12552,11 @@ parseStatement: true, parseSourceElement: true */
             }
           });
         }
+        //If removeCombined in play, remove any empty directories that
+        //may now exist because of its use
+        if (config.removeCombined && !config.out && config.dir) {
+          file.deleteEmptyDirs(config.dir);
+        }
         //Do other optimizations.
         if (config.out && !config.cssIn) {
           //Just need to worry about one JS file.
@@ -12542,6 +12580,12 @@ parseStatement: true, parseSourceElement: true */
             //inserted (by passing null for moduleName) since the files are
             //standalone, one module per file.
             fileContents = file.readFile(fileName);
+            //For builds, if wanting cjs translation, do it now, so that
+            //the individual modules can be loaded cross domain via
+            //plain script tags.
+            if (config.cjsTranslate) {
+              fileContents = commonJs.convert(fileName, fileContents);
+            }
             fileContents = build.toTransport(config.namespace, null, fileName, fileContents);
             optimize.jsFile(fileName, fileContents, fileName, config, pluginCollector);
           }
@@ -12724,14 +12768,6 @@ parseStatement: true, parseSourceElement: true */
             config[prop] = endsWithSlash(config[prop]);
           }
         }
-        //Do not allow URLs for paths resources.
-        if (config.paths) {
-          for (prop in config.paths) {
-            if (config.paths.hasOwnProperty(prop)) {
-              config.paths[prop] = build.makeAbsPath(config.paths[prop], (config.baseUrl || absFilePath));
-            }
-          }
-        }
         build.makeAbsObject(["out", "cssIn"], config, absFilePath);
         build.makeAbsObject(["startFile", "endFile"], config.wrap, absFilePath);
       };
@@ -12796,9 +12832,6 @@ parseStatement: true, parseSourceElement: true */
           try {
             buildFileConfig = eval("(" + buildFileContents + ")");
             build.makeAbsConfig(buildFileConfig, absFilePath);
-            if (!buildFileConfig.out && !buildFileConfig.dir) {
-              buildFileConfig.dir = (buildFileConfig.baseUrl || config.baseUrl) + "/build/";
-            }
             //Mix in the config now so that items in mainConfigFile can
             //be resolved relative to them if necessary, like if appDir
             //is set here, but the baseUrl is in mainConfigFile. Will
@@ -12843,6 +12876,11 @@ parseStatement: true, parseSourceElement: true */
         //Re-apply the override config values. Command line
         //args should take precedence over build file values.
         mixConfig(config, cfg);
+        //Fix paths to full paths so that they can be adjusted consistently
+        //lately to be in the output area.
+        lang.eachProp(config.paths, function (value, prop) {
+          config.paths[prop] = build.makeAbsPath(value, config.baseUrl);
+        });
         //Set final output dir
         if (config.hasOwnProperty("baseUrl")) {
           if (config.appDir) {
@@ -12855,6 +12893,12 @@ parseStatement: true, parseSourceElement: true */
           config.dirBaseUrl = endsWithSlash(config.dirBaseUrl);
         }
         //Check for errors in config
+        if (config.main) {
+          throw new Error('"main" passed as an option, but the ' + 'supported option is called "name".');
+        }
+        if (!config.name && !config.modules && !config.include && !config.cssIn) {
+          throw new Error('Missing either a "name", "include" or "modules" ' + 'option');
+        }
         if (config.cssIn && !config.out) {
           throw new Error("ERROR: 'out' option missing.");
         }
@@ -13032,7 +13076,7 @@ parseStatement: true, parseSourceElement: true */
         registry = context.registry;
         for (id in registry) {
           if (registry.hasOwnProperty(id) && id.indexOf('_@r') !== 0) {
-            if (id.indexOf('_unnormalized') === -1) {
+            if (id.indexOf('_unnormalized') === -1 && registry[id].enabled) {
               errIds.push(id);
               errUrl = registry[id].map.url;
               if (errUrlMap[errUrl]) {
@@ -13136,7 +13180,9 @@ parseStatement: true, parseSourceElement: true */
               };
               writeApi.asModule = function (moduleName, input) {
                 fileContents += "\n" + addSemiColon(
-                build.toTransport(namespace, moduleName, path, input, layer));
+                build.toTransport(namespace, moduleName, path, input, layer, {
+                  useSourceUrl: layer.context.config.useSourceUrl
+                }));
                 if (config.onBuildWrite) {
                   fileContents = config.onBuildWrite(moduleName, path, fileContents);
                 }
@@ -13158,13 +13204,18 @@ parseStatement: true, parseSourceElement: true */
             } else {
               currContents = file.readFile(path);
             }
+            if (config.cjsTranslate) {
+              currContents = commonJs.convert(path, currContents);
+            }
             if (config.onBuildRead) {
               currContents = config.onBuildRead(moduleName, path, currContents);
             }
             if (namespace) {
               currContents = pragma.namespace(currContents, namespace);
             }
-            currContents = build.toTransport(namespace, moduleName, path, currContents, layer);
+            currContents = build.toTransport(namespace, moduleName, path, currContents, layer, {
+              useSourceUrl: config.useSourceUrl
+            });
             if (packageConfig) {
               currContents = addSemiColon(currContents) + '\n';
               currContents += namespaceWithDot + "define('" + packageConfig.name + "', ['" + moduleName + "'], function (main) { return main; });\n";
@@ -13209,7 +13260,9 @@ parseStatement: true, parseSourceElement: true */
           return lang.jsEscape(item);
         }).join('","') + '"]';
       };
-      build.toTransport = function (namespace, moduleName, path, contents, layer) {
+      build.toTransport = function (namespace, moduleName, path, contents, layer, options) {
+        var baseUrl = layer && layer.context.config.baseUrl;
+
         function onFound(info) {
           //Only mark this module as having a name if not a named module,
           //or if a named module and the name matches expectations.
@@ -13217,7 +13270,12 @@ parseStatement: true, parseSourceElement: true */
             layer.modulesWithNames[moduleName] = true;
           }
         }
-        return transform.toTransport(namespace, moduleName, path, contents, onFound);
+        //Convert path to be a local one to the baseUrl, useful for
+        //useSourceUrl.
+        if (baseUrl) {
+          path = path.replace(baseUrl, '');
+        }
+        return transform.toTransport(namespace, moduleName, path, contents, onFound, options);
       };
       return build;
     });
