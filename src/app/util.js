@@ -63,14 +63,13 @@
                 xdr.timeout = timeout;
                 xdr.open("get", url);
                 xdr.onload = function(){
-                    console.log('util.js');
-                    console.log($);
-                                success($.parseJSON(xdr.responseText), '', 
+
+                success($.parseJSON(xdr.responseText), '', 
                                         xdr);
-                };
-                xdr.onerror = error;
-                
-                xdr.send();
+            };
+            xdr.onerror = error;
+            
+            xdr.send();
             }
         }
     }

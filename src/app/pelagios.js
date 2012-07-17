@@ -80,8 +80,7 @@
         eval(search_results_tmpl);
         eval(new_tab_tmpl);
         eval(about_tmpl);
-        console.log('pelagios.js');
-        console.log($);
+
         var dataset = $.parseJSON(datasetJSON);
         
         if (typeof($('#'+widgetContext.widgetID)) == undefined) {
@@ -345,7 +344,7 @@
                     var rootDatasetInfo; 
                     rootDatasetID = rootDataset.uri.replace(/http:\/\/pelagios.dme.ait.ac.at\/api\/datasets\//g, '');
                     rootDatasetInfo = getDatasetInfo(rootDatasetID);
-                    
+
                     if (typeof rootDatasetInfo !== 'undefined') {                     
                         // Add a section for the current root dataset
                         addSection(rootDatasetID, rootDatasetInfo.title, 
