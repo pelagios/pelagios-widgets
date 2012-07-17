@@ -545,7 +545,16 @@
                                         'tribe' : 'tribe.png',
                                         'settlement' : 'settlement.png',
                                         'urban' : 'settlement.png',
-                                        'people' : 'people.png'
+                                        'people' : 'people.png',
+                                        'aqueduct' : 'aqueduct.png',
+                                        'cape': 'cape.png',
+                                        'mine': 'mine.png',
+                                        'station' : 'port.png',
+                                        'road' : 'road.png',
+                                        'villa' : 'villa.png',
+                                        'wall' : 'wall.png',
+                                        'province' : 'people.png'
+                                        
                                         };
                 $.each(place_type_icons, function(place, image) {
                     $('.pelagios .list-results li.'+place).css('background-image', 
