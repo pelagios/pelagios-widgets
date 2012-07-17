@@ -9,7 +9,7 @@ There are two widgets:
 * The Pelagios Search Widget - allows searching for places, and then showing
 data about them
 
-For demonstrations of the widgets and instructions on how to embed them
+Both widgets are currently in beta. For demonstrations of the widgets and instructions on how to embed them
 see http://pelagios.github.com/pelagios-widgets/
 
 The code uses 
