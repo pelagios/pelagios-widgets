@@ -305,15 +305,20 @@
 
                 var html = Handlebars.templates['pleiades'](placeData);
                 $('#'+widgetContext.widgetID+'-pleiades').append(html);
-
-            // Add the Google map - we need to do this here so that we can refresh#
-            // it when the widget is opened
-            if (widgetContext.displayMap) {  
-                placeMap = new place_map.PlaceMap(widgetContext.widgetID+'-map_canvas');
-                placeMap.setMarker(data.reprPoint, data.names[0]);
-            }
+            
+                // Add the Google map - we need to do this here so that we can refresh#
+                // it when the widget is opened
+                if (data.reprPoint != null && widgetContext.displayMap) {  
+                    placeMap = new place_map.PlaceMap(widgetContext.widgetID+'-map_canvas');
+                    placeMap.setMarker(data.reprPoint, data.names[0]);  
+                    
+                }
                 
-            showPlace();
+                if (data.reprPoint == null) {
+                    placeMap = null;
+                }
+                
+                showPlace();
             }   
         }
         
@@ -619,9 +624,13 @@
             $('#'+widgetContext.widgetID+'-place').show();
             
             //Display the search map
-            if (widgetContext.displayMap) {
+            if (widgetContext.displayMap && placeMap != null) {
                 $('#'+widgetContext.widgetID+'-map').show();
                 placeMap.refresh();
+            }
+            
+            if (placeMap == null) {
+                $('#'+widgetContext.widgetID+'-map').hide();
             }
         }
         
