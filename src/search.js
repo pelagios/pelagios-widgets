@@ -60,6 +60,11 @@ if (!PELAGIOS_SEARCH_MAIN_JS_RUN) { // Only run this script once per page
                         iconDir:            baseURL+'images/partner_icons/',
                         scriptDir:          baseURL+'scripts/',
                         cssDir:             baseURL+'css/' ,
+
+                        containerWidth:    $(this).attr('data-container-width') ? $(this).attr('data-container-width')
+                                            : '550',
+                        mapWidth:          $(this).attr('data-container-width') ? $(this).attr('data-container-width') - 125
+                                            : '425',                    
                         pleiadesFlickrGroupOnly:  false,
                         type:               'search'                        
                                     };

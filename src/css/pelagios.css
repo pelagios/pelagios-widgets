@@ -21,7 +21,6 @@
     }
     
     .pelagios .container {
-        width: 550px !important;
         padding: 5px 15px 15px !important;
         /* Rounded corners */
         border-radius: 15px !important;

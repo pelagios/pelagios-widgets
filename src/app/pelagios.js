@@ -92,10 +92,9 @@
                          widgetContext.cssDir+
                          'pelagios.css" media="screen" />');
         // Add the basic widget structure to hang things off 
-        
         var html = Handlebars.templates['widget_container']({widgetContext: widgetContext});
         $('#'+widgetContext.widgetID).append(html);
-
+        $('.pelagios .container').width(widgetContext.containerWidth);
         // draggable() does not work in IE8 and it is possible that other
         // browsers also do not support it. It's not vital so just catch
         // any errors 

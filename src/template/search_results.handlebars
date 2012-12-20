@@ -1,7 +1,8 @@
 {{#if widgetContext.displayMap}} 
 <div id="{{widgetContext.widgetID}}-search-results-map" class="search-map">
     <p>Geographic Results for: <strong>{{searchString}}</strong></p>
-    <div id="{{widgetContext.widgetID}}-search-map_canvas" style="width:425px; height:200px"></div>
+    <div id="{{widgetContext.widgetID}}-search-map_canvas" style="width:
+    {{widgetContext.mapWidth}}; height:200px"></div>
 </div>  
 {{/if}}
 <div class="list-results-section">
