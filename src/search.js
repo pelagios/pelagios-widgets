@@ -43,9 +43,7 @@ if (!PELAGIOS_SEARCH_MAIN_JS_RUN) { // Only run this script once per page
                 // Find everything on the page with the right class
                 // Get its widget ID and create the widget
                 // Make sure this script is only run once
-
-
-                                    
+                       
                 $('.pelagios-search').each(function() {
                     var widgetContext = {baseURL:            baseURL, 
                         widgetID:           $(this).attr('id'), 
@@ -53,7 +51,7 @@ if (!PELAGIOS_SEARCH_MAIN_JS_RUN) { // Only run this script once per page
                                             !($(this).attr('data-display_map') === 'false'):
                                             true,
                         debug:              $(this).attr('data-debug') ? 
-                                            ($(this).attr('data-debug') === 'true') :true,
+                                            ($(this).attr('data-debug') === 'true') :false,
                         overlay:            false,
                         templateDir:        baseURL+'template/',
                         imageDir:           baseURL+'images/',

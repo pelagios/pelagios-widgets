@@ -44,7 +44,7 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                     $('.pelagios-place').each(function() {
                         msg += ' ' + $(this).attr('id');
                     });
-                    console.log(msg);
+                    //console.log(msg);
 
                     if ($('.pelagios-place').length == 0) {
                         console.log('No Pelagios widget HTML on this web page. '
@@ -69,7 +69,7 @@ if (!PELAGIOS_PLACE_MAIN_JS_RUN) { // Only run this script once per page
                                                  ($(this).attr('data-mouseover') === 'true'):
                                                  false,
                              debug:              $(this).attr('data-debug') ? 
-                                                 ($(this).attr('data-debug') === 'true') :true,
+                                                 ($(this).attr('data-debug') === 'true') :false,
                              icon:               $(this).attr('data-icon') ? 
                                                  ($(this).attr('data-icon') === 'true') :true,
                              newTab:             $(this).attr('data-new_tab') ? 
