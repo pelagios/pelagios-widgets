@@ -122,6 +122,13 @@
   "iconFileName": "pelagios.png",
   "strapline":  "Pleiades URIs appearing in ISAW Papers articles"
 }
+,
+{
+  "id": "e9e161a08db2906d135d7abefb145636",
+  "title": "OCRE",
+  "iconFileName": "pelagios.png",
+  "strapline":  "Online Coins of the Roman Empire"
+}
 ]
 
 
