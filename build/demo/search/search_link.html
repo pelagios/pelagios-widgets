@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../../docs/styles.css" media="screen" />
+  <title>Pelagios Search Widget</title>
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+     var queryString = window.location.search;
+     var containerWidth = queryString.replace(/.width=/g, '');
+     if (!containerWidth) {
+        containerWidth = 550;
+     }
+     
+     $('body').append('<div id="123-pelagios" data-container_width="'+containerWidth+'" class="pelagios pelagios-search"></div>');
+    });
+ </script>
+  <script type="text/javascript" src="../../lib/require.js"></script> 
+<script type="text/javascript" src="../../search.js"></script>
+  <body >
+  </head>
+  </body>
+</html>

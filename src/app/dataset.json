@@ -1,7 +1,7 @@
 [{
   "id": "b47df24737cd647789c7d61ede9fed09",
-  "title": "Arachne",
   "iconFileName": "arachne.png",
+  "title": "Arachne",
   "strapline": "A web research tool of the German Archaeological Institute for searching mass archaeological records"
 },
 {
@@ -66,8 +66,67 @@
   "iconFileName": "URE.png",
   "strapline":  "University Museum of ancient Greek, Egyptian & a little Roman stuff"
 }
-
-
+,
+{
+  "id": "5555ffd0e36e088c25f76b980139851a",
+  "title": "ORBIS",
+  "iconFileName": "pelagios.png",
+  "strapline":  "The Stanford Geospatial Network Model of the Roman World"
+}
+,
+{
+"id": "4f9bb4e7c0b0c329db0d2696814ffd2d",
+  "title": "SquinchPix",
+  "iconFileName": "pelagios.png",
+  "strapline":  "An archive of European imagery"
+}
+,
+{
+  "id": "77b38b7fc7d81fb278d1c3634638f8ee",
+  "title": "Sharing Ancient Wisdoms ",
+  "iconFileName": "pelagios.png",
+  "strapline": "Medieval gnomologia (collections of wise sayings)"
+}
+,
+{
+  "id": "434fc5aea15f6d39040c1282c4a2df63",
+  "title": "Portable Antiquities Scheme",
+  "iconFileName": "pelagios.png",
+  "strapline":  "Pleiades URIs appearing within the Portable Antiquities Scheme database"
+}
+,
+{
+  "id": "9fdb2911bcfc625c87cfce10d97b3de7",
+  "title": "ORACC",
+  "iconFileName": "pelagios.png",
+  "strapline":  "Open Richly Annotated Cuneiform Corpus"
+}
+,
+{
+  "id": "7bb4b28758a3607f9b1eea3b48df90a",
+  "title": "Meketre",
+  "iconFileName": "pelagios.png",
+  "strapline":  "Reliefs and paintings of Middle Kingdom tombs of Ancient Egypt"
+}
+,
+{
+  "id": "71fd46410b14843985db023501f2f76f",
+  "title": "The Book of the Dead Project",
+  "iconFileName": "pelagios.png",
+  "strapline":  "The evolution of the ancient egyptian Book of the Dead"
+}
+,
+{
+  "id": "e2e0b0b2199b875ff3acdce3f962c128",
+  "title": "ISAW Papers",
+  "iconFileName": "pelagios.png",
+  "strapline":  "Pleiades URIs appearing in ISAW Papers articles"
+}
 ]
+
+
+
+
+
 
 
