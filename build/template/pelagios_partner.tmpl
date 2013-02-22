@@ -1,125 +1,69 @@
 (function() {
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 templates['pelagios_partner'] = template(function (Handlebars,depth0,helpers,partials,data) {
-  helpers = helpers || Handlebars.helpers;
-  var buffer = "", stack1, stack2, foundHelper, tmp1, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression;
+  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
   var buffer = "", stack1, stack2;
-  buffer += "\r\n\r\n<li id=\"";
-  stack1 = depth0.widgetContext;
-  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.widgetID);
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.widgetContext.widgetID", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "-subdataset-";
-  stack1 = depth0.id;
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.id", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "\">\r\n<span id=\"";
-  stack1 = depth0.widgetContext;
-  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.widgetID);
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.widgetContext.widgetID", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "-subdataset_title-";
-  stack1 = depth0.id;
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.id", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "\">\r\n    ";
-  stack1 = depth0.title;
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.title", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "\r\n    <span id =\"";
-  stack1 = depth0.widgetContext;
-  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.widgetID);
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.widgetContext.widgetID", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "-subdataset_hits-";
-  stack1 = depth0.id;
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.id", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "\" class=\"link\">\r\n    ";
-  stack1 = depth0.references;
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.references", { hash: {} }); }
-  buffer += escapeExpression(stack1) + " hit";
-  stack1 = depth0.multipleReferences;
-  stack2 = helpers['if'];
-  tmp1 = self.program(2, program2, data);
-  tmp1.hash = {};
-  tmp1.fn = tmp1;
-  tmp1.inverse = self.noop;
-  stack1 = stack2.call(depth0, stack1, tmp1);
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    </span>\r\n    <img id=\"";
-  stack1 = depth0.widgetContext;
-  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.widgetID);
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.widgetContext.widgetID", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "-toggle-subdataset-";
-  stack1 = depth0.id;
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.id", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "\" \r\n         src = \"";
-  stack1 = depth0.widgetContext;
-  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.imageDir);
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.widgetContext.imageDir", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "icons/right-arrow.png\"  /> \r\n</span>\r\n    <div id=\"";
-  stack1 = depth0.widgetContext;
-  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.widgetID);
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.widgetContext.widgetID", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "-subdataset_content-";
-  stack1 = depth0.id;
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.id", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "\">\r\n\r\n        <div id=\"";
-  stack1 = depth0.widgetContext;
-  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.widgetID);
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.widgetContext.widgetID", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "-annotations-";
-  stack1 = depth0.id;
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.id", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "\" class=\"annotations\">\r\n        </div>\r\n        <div id=\"";
-  stack1 = depth0.widgetContext;
-  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.widgetID);
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.widgetContext.widgetID", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "-subdataset_pagination-";
-  stack1 = depth0.id;
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this.id", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "\" class=\"subdataset_pagination\">\r\n        </div>\r\n    </div>\r\n</li>\r\n\r\n";
-  return buffer;}
+  buffer += "\r\n\r\n<li id=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.widgetContext),stack1 == null || stack1 === false ? stack1 : stack1.widgetID)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "-subdataset-"
+    + escapeExpression(((stack1 = depth0.id),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">\r\n<span id=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.widgetContext),stack1 == null || stack1 === false ? stack1 : stack1.widgetID)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "-subdataset_title-"
+    + escapeExpression(((stack1 = depth0.id),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">\r\n    "
+    + escapeExpression(((stack1 = depth0.title),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\r\n    <span id =\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.widgetContext),stack1 == null || stack1 === false ? stack1 : stack1.widgetID)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "-subdataset_hits-"
+    + escapeExpression(((stack1 = depth0.id),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" class=\"link\">\r\n    "
+    + escapeExpression(((stack1 = depth0.references),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + " hit";
+  stack2 = helpers['if'].call(depth0, depth0.multipleReferences, {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n    </span>\r\n    <img id=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.widgetContext),stack1 == null || stack1 === false ? stack1 : stack1.widgetID)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "-toggle-subdataset-"
+    + escapeExpression(((stack1 = depth0.id),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" \r\n         src = \""
+    + escapeExpression(((stack1 = ((stack1 = depth0.widgetContext),stack1 == null || stack1 === false ? stack1 : stack1.imageDir)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "icons/right-arrow.png\"  /> \r\n</span>\r\n    <div id=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.widgetContext),stack1 == null || stack1 === false ? stack1 : stack1.widgetID)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "-subdataset_content-"
+    + escapeExpression(((stack1 = depth0.id),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">\r\n\r\n        <div id=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.widgetContext),stack1 == null || stack1 === false ? stack1 : stack1.widgetID)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "-annotations-"
+    + escapeExpression(((stack1 = depth0.id),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" class=\"annotations\">\r\n        </div>\r\n        <div id=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.widgetContext),stack1 == null || stack1 === false ? stack1 : stack1.widgetID)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "-subdataset_pagination-"
+    + escapeExpression(((stack1 = depth0.id),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" class=\"subdataset_pagination\">\r\n        </div>\r\n    </div>\r\n</li>\r\n\r\n";
+  return buffer;
+  }
 function program2(depth0,data) {
   
   
-  return "s";}
+  return "s";
+  }
 
-  buffer += "<ul class=\"subdatasets\" id=\"";
-  foundHelper = helpers.widgetContext;
-  stack1 = foundHelper || depth0.widgetContext;
-  stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.widgetID);
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "widgetContext.widgetID", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "-subdatasets-";
-  foundHelper = helpers.rootDatasetID;
-  stack1 = foundHelper || depth0.rootDatasetID;
-  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "rootDatasetID", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "\">\r\n";
-  foundHelper = helpers.subdataset;
-  stack1 = foundHelper || depth0.subdataset;
-  stack2 = helpers.each;
-  tmp1 = self.program(1, program1, data);
-  tmp1.hash = {};
-  tmp1.fn = tmp1;
-  tmp1.inverse = self.noop;
-  stack1 = stack2.call(depth0, stack1, tmp1);
-  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "<ul class=\"subdatasets\" id=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.widgetContext),stack1 == null || stack1 === false ? stack1 : stack1.widgetID)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "-subdatasets-";
+  if (stack2 = helpers.rootDatasetID) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.rootDatasetID; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "\">\r\n";
+  stack2 = helpers.each.call(depth0, depth0.subdataset, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "  \r\n</ul>         ";
-  return buffer;});
+  return buffer;
+  });
 })();

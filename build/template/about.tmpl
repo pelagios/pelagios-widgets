@@ -1,9 +1,11 @@
 (function() {
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 templates['about'] = template(function (Handlebars,depth0,helpers,partials,data) {
-  helpers = helpers || Handlebars.helpers;
-  var foundHelper, self=this;
+  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  
 
 
-  return "<p>This widget displays data from the Pelagios project partners about the location specified.</p>\r\n<p>View the <a href=\"http://pelagios-project.blogspot.co.uk/\" target=\"_blank\">Pelagios website</a>\r\n for more information.</a>\r\n            ";});
+  return "<p>This widget displays data from the Pelagios project partners about the location specified.</p>\r\n<p>View the <a href=\"http://pelagios-project.blogspot.co.uk/\" target=\"_blank\">Pelagios website</a>\r\n for more information.</a>\r\n            ";
+  });
 })();
