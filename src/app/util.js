@@ -34,7 +34,7 @@
     */
     function getAPIData(url, success, error, timeout, cors) {
         
-        var settings = {type:"POST",
+        var settings = {type:"GET",
                         dataType:"json",
                         timeout: timeout,
                         success: success,
