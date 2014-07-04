@@ -49,4 +49,23 @@ The Pelagios Widgets includes libraries from these projects
 * Text.js And async.js plug-ins for require.js 
 * Jquery.pagination
 
+About
+=================
+
+The code for the widgets needs to be built useing the Rakefile before being used. This takes the code in 
+the src directory and puts the built code in the build directory. 
+
+To do this
+- Install ruby (if not already installed)
+- Install rake (if not already installed)
+- Install node and npm (if not already installed)
+- Install handlebars via 'npm install handlebars -g' (if not already installed)
+- At the ruby prompt run 'rake'
+
+The rakefile currently does two things - it precompiles the handlebars templates (putting them in src/template) and then uses require.js (which the code uses as its module loader) to optimise the javascript. The pelagios.build.js file provides the information necessary for require.js to do this optimisation (and move the code into the build directory).
+
+If you are doing development, then you will want to do this with the code in the src directory (as you do not want to use the optimised files)
+
+
+
 
