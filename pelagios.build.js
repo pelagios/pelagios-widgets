@@ -3,6 +3,7 @@
     baseUrl: ".",
     dir: "build",  
     
+    optimize: "none",
     optimizeCss: "standard",
     inlineText: true,   
     optimizeAllPluginResources: true,
